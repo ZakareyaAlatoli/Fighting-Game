@@ -33,10 +33,16 @@ namespace Pratfall
     {
         public Timer time;
         public Text display;
+        public static event System.Action MatchOver;
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
+            time.TimeUp += MatchOver;
+        }
 
+        void OnDisable()
+        {
+            time.TimeUp -= MatchOver;
         }
 
         // Update is called once per frame
