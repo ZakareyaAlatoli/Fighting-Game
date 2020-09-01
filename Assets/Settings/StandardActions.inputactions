@@ -783,6 +783,17 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d6549e6-14a6-4beb-8e4f-c29fec7ca1d6",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
