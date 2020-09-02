@@ -4,9 +4,18 @@ using UnityEngine;
 
 namespace Pratfall
 {
+    public class HitEvent
+    {
+        public Hitbox hitter;
+        public Hurtbox victim;
+    }
+
     [RequireComponent(typeof(Collider))]
     public class Hitbox : MonoBehaviour
     {
+        public static event System.Action<HitEvent> Hit;
+        public Filter<string> filter;
+ 
         // Start is called before the first frame update
         void Start()
         {
@@ -16,7 +25,15 @@ namespace Pratfall
 
         private void OnTriggerEnter(Collider other)
         {
-            GetComponent<Hurtbox>()?.OnHit(this);
+            Hurtbox hbox = other.GetComponent<Hurtbox>();
+            if(hbox != null)
+            {
+                if (filter.Check(hbox.tags))
+                {
+                    hbox.OnHit(this);
+                    Hit?.Invoke(new HitEvent { hitter = this, victim = hbox} );
+                }
+            }
         }
     }
 }
