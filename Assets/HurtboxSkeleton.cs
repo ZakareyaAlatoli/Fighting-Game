@@ -9,7 +9,7 @@ namespace Pratfall
         public int hits = 0;
         public Hurtbox[] hurtboxes;
         public event System.Action<Hitbox> Struck;
-        public List<Hitbox> hitCounter;
+        private List<Hitbox> hitCounter;
 
         // Start is called before the first frame update
         void Start()
