@@ -13,7 +13,6 @@ namespace Pratfall
         public string[] tags;
         public void OnHit(Hitbox hitter)
         {
-            Debug.Log(hitter.name + " hit me (" + name + ")!");
             Struck?.Invoke(hitter);
         }
 

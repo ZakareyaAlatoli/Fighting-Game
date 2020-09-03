@@ -14,6 +14,7 @@ namespace Pratfall
     public class Hitbox : MonoBehaviour
     {
         public static event System.Action<HitEvent> Hit;
+        public event System.Action<Hitbox> Disabled;
         public Filter<string> filter;
  
         // Start is called before the first frame update
@@ -34,6 +35,10 @@ namespace Pratfall
                     Hit?.Invoke(new HitEvent { hitter = this, victim = hbox} );
                 }
             }
+        }
+        void OnDisable()
+        {
+            Disabled?.Invoke(this);
         }
     }
 }
