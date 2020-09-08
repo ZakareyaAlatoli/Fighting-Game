@@ -6,15 +6,13 @@ namespace Pratfall
 {
     public class HurtboxSkeleton : MonoBehaviour
     {
-        public int hits = 0;
         public Hurtbox[] hurtboxes;
         public event System.Action<Hitbox> Struck;
-        private List<Hitbox> hitCounter;
 
         // Start is called before the first frame update
         void Start()
         {
-            hitCounter = new List<Hitbox>();
+            hitThisFrame = new List<Hitbox>();
         }
 
         void OnEnable()
@@ -33,26 +31,36 @@ namespace Pratfall
             }
         }
 
-        /// <summary>
-        /// A hitbox that hits multiple colliders of a single HurtboxSkeleton should
-        /// only count as one hit
-        /// </summary>
-        /// <param name="hitter"></param>
-        public void OnHurt(Hitbox hitter)
+        private List<Hitbox> hitThisFrame;
+        private IEnumerator CR_ResetHitFlag()
         {
-            if (!hitCounter.Contains(hitter))
+            yield return new WaitForEndOfFrame();
+            hitThisFrame.Clear();
+        }
+
+        private IEnumerator CR_TriggerTimeout(Hitbox hitter)
+        {
+            foreach(Hurtbox h in hurtboxes)
             {
-                Struck?.Invoke(hitter);
-                hits++;
-                hitCounter.Add(hitter);
-                hitter.Disabled += OnHitboxDisabled;
+                Physics.IgnoreCollision(h.GetComponent<Collider>(), hitter.GetComponent<Collider>(), true);
+            }
+            yield return new WaitForSeconds(hitter.rehitTimer);
+            foreach (Hurtbox h in hurtboxes)
+            {
+                Physics.IgnoreCollision(h.GetComponent<Collider>(), hitter.GetComponent<Collider>(), false);
             }
         }
 
-        private void OnHitboxDisabled(Hitbox hitter)
+        public void OnHurt(Hitbox hitter)
         {
-            hitCounter.Remove(hitter);
-            hitter.Disabled -= OnHitboxDisabled;
+            //Prevent the same hitbox from hitting multiple parts of the skeleton in one frame
+            if (!hitThisFrame.Contains(hitter))
+            {
+                Struck?.Invoke(hitter);
+                StartCoroutine(CR_TriggerTimeout(hitter));
+                hitThisFrame.Add(hitter);
+                StartCoroutine(CR_ResetHitFlag());
+            }
         }
     }
 }

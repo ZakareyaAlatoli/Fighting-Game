@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pratfall
 {   
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider), typeof(Rigidbody))]
     public class Hurtbox : MonoBehaviour
     {
         public event System.Action<Hitbox> Struck;

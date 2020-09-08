@@ -14,8 +14,9 @@ namespace Pratfall
     public class Hitbox : MonoBehaviour
     {
         public static event System.Action<HitEvent> Hit;
-        public event System.Action<Hitbox> Disabled;
+        public float damage;
         public Filter<string> filter;
+        public float rehitTimer;
  
         // Start is called before the first frame update
         void Start()
@@ -24,7 +25,7 @@ namespace Pratfall
             gameObject.layer = LayerMask.NameToLayer("Hitbox");
         }
 
-        private void OnTriggerEnter(Collider other)
+        void OnTriggerStay(Collider other)
         {
             Hurtbox hbox = other.GetComponent<Hurtbox>();
             if(hbox != null)
@@ -35,10 +36,6 @@ namespace Pratfall
                     Hit?.Invoke(new HitEvent { hitter = this, victim = hbox} );
                 }
             }
-        }
-        void OnDisable()
-        {
-            Disabled?.Invoke(this);
         }
     }
 }
