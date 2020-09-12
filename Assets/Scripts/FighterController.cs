@@ -7,28 +7,29 @@ namespace Pratfall
 {
     public class FighterController : MonoBehaviour
     {
-        private int STANDARD_ATTACK;
-        public Animator animator;
-        public Hitbox punchHitbox;
-
+        public InputAction move;
+        public Rigidbody body;
+        public GroundDetector detectGround;
+        public float groundSpeed = 40f;
+        public float airSpeed = 20f;
+        public float jumpForce = 50f;
         // Start is called before the first frame update
         void Start()
         {
-            STANDARD_ATTACK = Animator.StringToHash("StandardAttack");
+            move.Enable();
         }
 
-        //--MOVE DEFINITIONS--//
-        private IEnumerator MV_StandardAttack()
+        public void MoveHorizontal(float input)
         {
-            int frameCount = 0;
-            punchHitbox.gameObject.SetActive(true);
-            animator.Play(STANDARD_ATTACK);
-            while(frameCount < 20)
-            {
-                frameCount++;
-                yield return null;
-            }
-            punchHitbox.gameObject.SetActive(false);
+            if(detectGround.grounded)
+                body.AddForce(new Vector3(input * groundSpeed, 0f, 0f));
+            else
+                body.AddForce(new Vector3(input * airSpeed, 0f, 0f));
+        }
+
+        public void Jump()
+        {
+            body.AddForce(Vector3.up * jumpForce);
         }
 
         // Update is called once per frame
@@ -36,9 +37,10 @@ namespace Pratfall
         {
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                StopCoroutine(MV_StandardAttack());
-                StartCoroutine(MV_StandardAttack());
+                body.AddForce(Vector3.up * jumpForce);
             }
+            MoveHorizontal(move.ReadValue<float>());
+
         }
     }
 }
