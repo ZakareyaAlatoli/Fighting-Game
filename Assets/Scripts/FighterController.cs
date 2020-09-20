@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,8 @@ namespace Pratfall
         public float groundSpeed = 40f;
         public float airSpeed = 20f;
         public float jumpForce = 50f;
+
+        private bool moveEnabled;
         // Start is called before the first frame update
         void Start()
         {
@@ -29,18 +32,62 @@ namespace Pratfall
 
         public void Jump()
         {
-            body.AddForce(Vector3.up * jumpForce);
+            if(detectGround.grounded)
+                body.AddForce(Vector3.up * jumpForce);
         }
 
         // Update is called once per frame
         void Update()
         {
+            //HANDLE ALL INPUTS
+            //MOVE
+            MoveHorizontal(move.ReadValue<float>());
+            //JUMP
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                body.AddForce(Vector3.up * jumpForce);
+                Jump();
             }
-            MoveHorizontal(move.ReadValue<float>());
+            //ATTACK
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Attack();
+            }
+            //SPECIAL
+            if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                Special();
+            }
+            //BLOCK
+            if (Mouse.current.middleButton.wasPressedThisFrame)
+            {
+                StartBlock();
+            }
+            else if (Mouse.current.middleButton.wasReleasedThisFrame)
+            {
+                ReleaseBlock();
+            }
 
+
+        }
+
+        private void ReleaseBlock()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StartBlock()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Special()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Attack()
+        {
+            throw new NotImplementedException();
         }
     }
 }
