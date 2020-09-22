@@ -44,7 +44,10 @@ namespace Pratfall
             {
                 Physics.IgnoreCollision(h.GetComponent<Collider>(), hitter.GetComponent<Collider>(), true);
             }
-            yield return new WaitForSeconds(hitter.rehitTimer);
+            if (hitter.rehitTimer >= 0)
+                yield return new WaitForSeconds(hitter.rehitTimer);
+            else
+                yield break;
             foreach (Hurtbox h in hurtboxes)
             {
                 Physics.IgnoreCollision(h.GetComponent<Collider>(), hitter.GetComponent<Collider>(), false);
