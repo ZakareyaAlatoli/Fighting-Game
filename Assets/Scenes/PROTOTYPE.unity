@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 81535749}
   - component: {fileID: 81535748}
   - component: {fileID: 81535753}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1078,6 @@ GameObject:
   m_Component:
   - component: {fileID: 411846497}
   - component: {fileID: 411846498}
-  - component: {fileID: 411846499}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1118,19 +1117,6 @@ MonoBehaviour:
   - {fileID: 996702778}
   - {fileID: 261543952}
   - {fileID: 1594643687}
---- !u!114 &411846499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 411846496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34667a4c9346df94e968b04a0565e82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 411846498}
 --- !u!1 &421136621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,7 +3223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1298706069
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3291,7 +3277,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1299414324
 GameObject:
@@ -3306,7 +3292,7 @@ GameObject:
   - component: {fileID: 1299414327}
   - component: {fileID: 1299414326}
   - component: {fileID: 1299414332}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4290,7 +4276,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1697357199}
-  - component: {fileID: 1697357200}
   m_Layer: 0
   m_Name: DefaultCharacter
   m_TagString: Untagged
@@ -4311,27 +4296,8 @@ Transform:
   m_Children:
   - {fileID: 1951153813}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1697357200
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697357198}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f67074bca888ca64889e27a78ae3272e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1738051484
 GameObject:
   m_ObjectHideFlags: 0
@@ -4565,6 +4531,101 @@ Transform:
   m_Father: {fileID: 1401089259}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1883573323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1883573324}
+  - component: {fileID: 1883573325}
+  - component: {fileID: 1883573326}
+  m_Layer: 0
+  m_Name: PlayerSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1883573324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883573323}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1883573325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883573323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: 4
+  m_AllowJoining: 1
+  m_JoinBehavior: 1
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 19cd13f2-1e08-4efa-9885-63a1825bcda6
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 84ad496e-027b-4978-b202-d4ccf3f585eb
+        m_Path: <HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button2
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 769389078869666917, guid: 7c1f6da179c09b74cb79d7b8ddc2b3c5, type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &1883573326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883573323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3abff0fde80b344fb5e16debcfe9ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1891192371
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,6 +4990,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1943394535}
   - component: {fileID: 1943394536}
+  - component: {fileID: 1943394537}
+  - component: {fileID: 1943394538}
   m_Layer: 0
   m_Name: DEBUGGER
   m_TagString: EditorOnly
@@ -4948,7 +5011,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1943394536
 MonoBehaviour:
@@ -4957,12 +5020,75 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943394534}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34667a4c9346df94e968b04a0565e82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 411846498}
+--- !u!114 &1943394537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943394534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 1
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 486a3cf3-b1f1-479e-8d8e-d2f0d52a62b1
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: d47804d5-2b42-4693-b6bd-67b689deba95
+        m_Path: <HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button2
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+    m_Reference: {fileID: -6736820331669137190, guid: 5023860b83e75df4484ec4c857101f7d, type: 3}
+  m_PlayerPrefab: {fileID: 7390753060980954066, guid: f87ce5f9537a65344b3b399e1e6fc829, type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &1943394538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943394534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd0d38742c9a0145a46a9c8d812a2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1951153812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5035,7 +5161,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951153812}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94ac8388c9c590e4eaa3bd689fdc5ddc, type: 3}
   m_Name: 
@@ -5150,7 +5276,7 @@ GameObject:
   - component: {fileID: 2046396153}
   - component: {fileID: 2046396152}
   - component: {fileID: 2046396157}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: P2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
