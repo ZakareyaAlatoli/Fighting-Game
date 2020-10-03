@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldCollider: {fileID: 457859962220822452}
+  hurtbox: {fileID: 457859962837386817}
   jumpForce: 500
   runSpeed: 150
 --- !u!1 &457859962220822455

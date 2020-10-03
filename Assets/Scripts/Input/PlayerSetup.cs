@@ -17,6 +17,7 @@ namespace Pratfall.Input
         void OnPlayerJoined(PlayerInput player)
         {
             player.name = "Player" + inputManager.playerCount.ToString();
+            player.transform.SetParent(transform);
         }
         // Start is called before the first frame update
         void Start()

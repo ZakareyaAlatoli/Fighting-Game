@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pratfall
+namespace Pratfall.Characters
 {
-    public class DefaultCharacter : Character
+    public class StandardCharacter : Character
     {
         public Rigidbody worldCollider;
+        public CompoundCollider hurtbox;
         public float jumpForce;
         public float runSpeed;
 
@@ -20,9 +21,19 @@ namespace Pratfall
             worldCollider.AddForce(Vector2.up * jumpForce);
         }
 
-        void Start()
+        new void Start()
         {
             base.Start();
+        }
+
+        public override void OnAttack(Vector2 direction)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
