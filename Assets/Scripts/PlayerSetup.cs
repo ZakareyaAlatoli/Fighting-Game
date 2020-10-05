@@ -12,27 +12,39 @@ namespace Pratfall
     [RequireComponent(typeof(PlayerInputManager))]
     public class PlayerSetup : MonoBehaviour
     {
-        public static List<PlayerInput> players { get; private set; }       
+        public static List<PlayerInput> players { get; private set; }
+
+        public static event System.Action<InputHandler, int> PlayerJoined;
+        public static event System.Action<InputHandler, int> PlayerLeft;
         PlayerInputManager inputManager;
 
         void OnPlayerJoined(PlayerInput player)
         {
-            player.name = "Player" + inputManager.playerCount.ToString();
+            player.name = "Player" + (player.playerIndex + 1);
             players.Add(player);
             player.transform.SetParent(transform);
+            PlayerJoined?.Invoke(player.GetComponent<InputHandler>(), player.playerIndex);
+        }
+
+        void OnPlayerLeft(PlayerInput player)
+        {
+            PlayerLeft?.Invoke(player.GetComponent<InputHandler>(), player.playerIndex);
+            players.Remove(player);
+        }
+
+        class MissingControllableComponentException : System.Exception
+        {
+            //
         }
 
         public static void AssignPlayerToControllable(InputHandler handler, IControllable controllable)
         {
             if (handler.controllables == null)
                 handler.controllables = new List<IControllable>();
-            handler.controllables.Add(controllable);
-        }
-
-        void OnPlayerLeft(PlayerInput player)
-        {
-            players.Remove(player);
-            Debug.Log(player.name + " left");
+            if(controllable == null)
+                throw new MissingControllableComponentException();
+            else
+                handler.controllables.Add(controllable);
         }
 
         public static void RemovePlayerFromControllable(InputHandler handler, IControllable controllable)
