@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Pratfall.Input;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Pratfall.Input
+namespace Pratfall
 {
     /// <summary>
     /// Manages game state for players joining/leaving
@@ -13,20 +14,30 @@ namespace Pratfall.Input
     {
         public static List<PlayerInput> players { get; private set; }       
         PlayerInputManager inputManager;
-        
 
         void OnPlayerJoined(PlayerInput player)
         {
             player.name = "Player" + inputManager.playerCount.ToString();
             players.Add(player);
             player.transform.SetParent(transform);
-            Debug.Log(player.name + " joined");
+        }
+
+        public static void AssignPlayerToControllable(InputHandler handler, IControllable controllable)
+        {
+            if (handler.controllables == null)
+                handler.controllables = new List<IControllable>();
+            handler.controllables.Add(controllable);
         }
 
         void OnPlayerLeft(PlayerInput player)
         {
             players.Remove(player);
             Debug.Log(player.name + " left");
+        }
+
+        public static void RemovePlayerFromControllable(InputHandler handler, IControllable controllable)
+        {
+            handler.controllables.Remove(controllable);
         }
 
         // Start is called before the first frame update

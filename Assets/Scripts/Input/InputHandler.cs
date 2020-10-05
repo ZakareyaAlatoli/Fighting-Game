@@ -13,7 +13,9 @@ namespace Pratfall.Input
         void OnJump();
         void OnBlock();
     }
-
+    /// <summary>
+    /// Passes input from an input device to a controllable object
+    /// </summary>
     [RequireComponent(typeof(PlayerInput))]
     public class InputHandler : MonoBehaviour
     {
@@ -30,12 +32,13 @@ namespace Pratfall.Input
         /// <summary>
         /// This object passes its inputs to any object that implements IControllable
         /// </summary>
-        public IControllable[] controllables;
+        public List<IControllable> controllables;
 
         // Start is called before the first frame update
         void Awake()
         {
-            controllables = new IControllable[] { };
+            if(controllables == null)
+                controllables = new List<IControllable>();
             input = GetComponent<PlayerInput>();
 
             moveAction = input.actions.FindAction(MOVE);
@@ -75,8 +78,8 @@ namespace Pratfall.Input
 
         void Update()
         {
-            foreach(IControllable controllable in controllables)
-            {
+            foreach (IControllable controllable in controllables)
+            {         
                 controllable.OnMove(moveAction.ReadValue<Vector2>());
                 controllable.OnAttack(attackAction.ReadValue<Vector2>());
             }

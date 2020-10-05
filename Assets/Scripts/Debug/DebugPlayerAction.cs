@@ -9,10 +9,11 @@ namespace Pratfall.Debugging
     {
         public DynamicAction playerAction;
         // Start is called before the first frame update
-        void Start(){ }
+        void Start() { }
 
         // Update is called once per frame
-        void Update() {
+        void Update()
+        {
             if (Keyboard.current.qKey.wasPressedThisFrame && playerAction != null)
                 playerAction.Begin();
             if (Keyboard.current.wKey.wasPressedThisFrame && playerAction != null)

@@ -12,19 +12,11 @@ namespace Pratfall {
         {
             for (int i = 0; i < PlayerSetup.players.Count; i++)
             {
-                PlayerSetup.players[i].GetComponent<InputHandler>().controllables =
-                new IControllable[] { FindObjectOfType<Character>() as IControllable };
-
-                AssignPlayerToCharacter(PlayerSetup.players[i].GetComponent<InputHandler>(), characters[i]);
+                PlayerSetup.AssignPlayerToControllable(PlayerSetup.players[i].GetComponent<InputHandler>(), characters[i]);
             }  
         }
 
         public void RoundEnd()
-        {
-            //
-        }
-
-        void AssignPlayerToCharacter(InputHandler player, IControllable character)
         {
             //
         }
