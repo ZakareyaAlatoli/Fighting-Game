@@ -14,8 +14,8 @@ namespace Pratfall
     {
         public static List<PlayerInput> players { get; private set; }
 
-        public static event System.Action<InputHandler, int> PlayerJoined;
-        public static event System.Action<InputHandler, int> PlayerLeft;
+        public static event System.Action<PlayerInput> PlayerJoined;
+        public static event System.Action<PlayerInput> PlayerLeft;
         PlayerInputManager inputManager;
 
         void OnPlayerJoined(PlayerInput player)
@@ -23,12 +23,12 @@ namespace Pratfall
             player.name = "Player" + (player.playerIndex + 1);
             players.Add(player);
             player.transform.SetParent(transform);
-            PlayerJoined?.Invoke(player.GetComponent<InputHandler>(), player.playerIndex);
+            PlayerJoined?.Invoke(player);
         }
 
         void OnPlayerLeft(PlayerInput player)
         {
-            PlayerLeft?.Invoke(player.GetComponent<InputHandler>(), player.playerIndex);
+            PlayerLeft?.Invoke(player);
             players.Remove(player);
         }
 

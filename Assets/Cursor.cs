@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 namespace Pratfall.Input
 {
+    public interface ISelectableByPlayer
+    {
+        void OnSelectedByPlayer(InputHandler player);
+    }
     /// <summary>
     /// Floating player-specific cursor
     /// </summary>
@@ -15,7 +19,10 @@ namespace Pratfall.Input
         PointerEventData m_PointerEventData;
         EventSystem m_EventSystem;
 
+        [HideInInspector]
+        public InputHandler associatedPlayer;
         public float speed = 7.5f;
+
         public void OnAttack(Vector2 direction)
         {
             
@@ -61,9 +68,18 @@ namespace Pratfall.Input
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                IPointerClickHandler selectedObject = result.gameObject.GetComponent<IPointerClickHandler>();
-                if (selectedObject != null)
-                    selectedObject.OnPointerClick(m_PointerEventData);
+                IPointerClickHandler[] clickHandler = result.gameObject.GetComponents<IPointerClickHandler>();
+                ISelectableByPlayer[] playerSelector = result.gameObject.GetComponents<ISelectableByPlayer>();
+                if (clickHandler != null)
+                {
+                    foreach(IPointerClickHandler pch in clickHandler)
+                        pch.OnPointerClick(m_PointerEventData);
+                }
+                if (playerSelector != null)
+                {
+                    foreach (ISelectableByPlayer sbp in playerSelector)
+                        sbp.OnSelectedByPlayer(associatedPlayer);
+                }
             }
         }
 

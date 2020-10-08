@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Pratfall {
     public class CursorManager : MonoBehaviour
@@ -18,26 +19,23 @@ namespace Pratfall {
             spawnedCursors = new Dictionary<InputHandler, GameObject>();
         }
 
-        private void PlayerSetup_PlayerLeft(InputHandler obj, int port)
+        private void PlayerSetup_PlayerLeft(PlayerInput player)
         {
-            PlayerSetup.RemovePlayerFromControllable(obj, spawnedCursors[obj].GetComponent<Input.Cursor>());
-            Destroy(spawnedCursors[obj]);
-            spawnedCursors.Remove(obj);
+            InputHandler handler = player.GetComponent<InputHandler>();
+            PlayerSetup.RemovePlayerFromControllable(handler, spawnedCursors[handler].GetComponent<Input.Cursor>());
+            Destroy(spawnedCursors[handler]);
+            spawnedCursors.Remove(handler);
         }
 
-        void PlayerSetup_PlayerJoined(InputHandler obj, int port)
+        void PlayerSetup_PlayerJoined(PlayerInput player)
         {
+            InputHandler handler = player.GetComponent<InputHandler>();
             GameObject cursor = Instantiate(cursorPrefab);
-            cursor.name = "CursorP" + (port + 1).ToString();
+            cursor.GetComponent<Input.Cursor>().associatedPlayer = handler;
+            cursor.name = "CursorP" + (player.playerIndex + 1).ToString();
             cursor.transform.SetParent(HUD.transform);
-            spawnedCursors.Add(obj, cursor);
-            PlayerSetup.AssignPlayerToControllable(obj, cursor.GetComponent<Input.Cursor>());
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            spawnedCursors.Add(handler, cursor);
+            PlayerSetup.AssignPlayerToControllable(handler, cursor.GetComponent<Input.Cursor>());
         }
     }
 }
