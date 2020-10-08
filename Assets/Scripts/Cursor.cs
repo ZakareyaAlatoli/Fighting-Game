@@ -15,13 +15,39 @@ namespace Pratfall.Input
     /// </summary>
     public class Cursor : MonoBehaviour, IControllable
     {
+        [SerializeField]
+        private Text _text;
         GraphicRaycaster m_Raycaster;
         PointerEventData m_PointerEventData;
         EventSystem m_EventSystem;
+        /// <summary>
+        /// Displays which player this cursor belongs to
+        /// </summary>
+        public string header
+        {
+            get
+            {
+                return _text.text;
+            }
+            set
+            {
+                _text.text = value;
+            }
+        }
 
         [HideInInspector]
         public InputHandler associatedPlayer;
         public float speed = 7.5f;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            _text = GetComponent<Text>();
+            //Fetch the Raycaster from the GameObject (the Canvas)
+            m_Raycaster = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
+            //Fetch the Event System from the Scene
+            m_EventSystem = EventSystem.current;
+        }
 
         public void OnAttack(Vector2 direction)
         {
@@ -81,15 +107,6 @@ namespace Pratfall.Input
                         sbp.OnSelectedByPlayer(associatedPlayer);
                 }
             }
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            //Fetch the Raycaster from the GameObject (the Canvas)
-            m_Raycaster = FindObjectOfType<Canvas>().GetComponent<GraphicRaycaster>();
-            //Fetch the Event System from the Scene
-            m_EventSystem = EventSystem.current;
         }
     }
 }

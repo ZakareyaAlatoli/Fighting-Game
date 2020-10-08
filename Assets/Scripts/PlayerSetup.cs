@@ -12,6 +12,9 @@ namespace Pratfall
     [RequireComponent(typeof(PlayerInputManager))]
     public class PlayerSetup : MonoBehaviour
     {
+        /// <summary>
+        /// List of all currently active players
+        /// </summary>
         public static List<PlayerInput> players { get; private set; }
 
         public static event System.Action<PlayerInput> PlayerJoined;
@@ -32,28 +35,8 @@ namespace Pratfall
             players.Remove(player);
         }
 
-        class MissingControllableComponentException : System.Exception
-        {
-            //
-        }
-
-        public static void AssignPlayerToControllable(InputHandler handler, IControllable controllable)
-        {
-            if (handler.controllables == null)
-                handler.controllables = new List<IControllable>();
-            if(controllable == null)
-                throw new MissingControllableComponentException();
-            else
-                handler.controllables.Add(controllable);
-        }
-
-        public static void RemovePlayerFromControllable(InputHandler handler, IControllable controllable)
-        {
-            handler.controllables.Remove(controllable);
-        }
-
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             inputManager = GetComponent<PlayerInputManager>();
             players = new List<PlayerInput>();

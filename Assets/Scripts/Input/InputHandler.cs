@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 namespace Pratfall.Input
 {
+    /// <summary>
+    /// Any object that should be driven by player input should implement this
+    /// </summary>
     public interface IControllable
     {
         void OnMove(Vector2 direction);
@@ -83,6 +86,25 @@ namespace Pratfall.Input
                 controllable.OnMove(moveAction.ReadValue<Vector2>());
                 controllable.OnAttack(attackAction.ReadValue<Vector2>());
             }
+        }
+
+        class MissingControllableComponentException : System.Exception { }
+
+        public static void AssignPlayerToControllable(InputHandler handler, IControllable controllable)
+        {
+            if (handler.controllables == null)
+                handler.controllables = new List<IControllable>();
+            if (controllable == null)
+                throw new MissingControllableComponentException();
+            else
+            {
+                handler.controllables.Add(controllable);
+            }    
+        }
+
+        public static void RemovePlayerFromControllable(InputHandler handler, IControllable controllable)
+        {
+            handler.controllables.Remove(controllable);
         }
     }
 }

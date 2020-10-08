@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pratfall.Characters
 {
@@ -10,6 +11,9 @@ namespace Pratfall.Characters
     /// </summary>
     public abstract class Character : MonoBehaviour, IControllable
     {
+        public Sprite sprite;
+        public string charName;
+        public Rigidbody worldCollider;
         // Start is called before the first frame update
         protected virtual void Start()
         {

@@ -9,6 +9,9 @@ namespace Pratfall {
     public class RoundLogic : MonoBehaviour
     {
         public static Dictionary<InputHandler, Character> characters;
+        public static List<Character> spawnedCharacters;
+        public static event System.Action RoundStarted;
+        public static event System.Action RoundEnded;
 
         public static void QueueCharacter(Character characterPrefab, InputHandler playerIndex)
         {
@@ -20,53 +23,36 @@ namespace Pratfall {
             {
                 characters[playerIndex] = characterPrefab;
             }
-
-            foreach (InputHandler ih in characters.Keys)
-            {
-                Debug.Log("Player" + (ih.GetComponent<PlayerInput>().playerIndex + 1) + ": " + characters[ih]);
-            }
         }
 
         public void RoundStart()
         {
+            //Spawn each character and give the players control of their selected character
             foreach(InputHandler ih in characters.Keys)
             {
-                PlayerSetup.AssignPlayerToControllable(ih, characters[ih]);
+                GameObject instantiatedCharacter = GameObject.Instantiate(characters[ih].gameObject);
+                spawnedCharacters.Add(instantiatedCharacter.GetComponent<Character>());
+                InputHandler.AssignPlayerToControllable(ih, instantiatedCharacter.GetComponent<Character>());
+                RoundStarted?.Invoke();
             }
         }
 
         public void RoundEnd()
         {
-            //
-        }
-
-        void OnEnable()
-        {
-            //RoundStart();
+            RoundEnded?.Invoke();
         }
 
         // Start is called before the first frame update
         void Awake()
         {
             characters = new Dictionary<InputHandler, Character>();
+            spawnedCharacters = new List<Character>();
             PlayerSetup.PlayerLeft += PlayerSetup_PlayerLeft;
         }
 
         void PlayerSetup_PlayerLeft(PlayerInput player)
         {
             characters.Remove(player.GetComponent<InputHandler>());
-            Debug.Log("Player" + (player.playerIndex + 1) + " left");
-            if(characters.Count <= 0)
-            {
-                Debug.Log("NO MORE CHARACTERS BEEYOTCH");
-            }
-            else
-            {
-                foreach (InputHandler ih in characters.Keys)
-                {
-                    Debug.Log("Player" + (ih.GetComponent<PlayerInput>().playerIndex + 1) + ": " + characters[ih]);
-                }
-            }
         }
     }
 }

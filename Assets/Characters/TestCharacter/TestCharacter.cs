@@ -6,7 +6,6 @@ namespace Pratfall.Characters
 {
     public class TestCharacter : Character
     {
-        public Rigidbody worldCollider;
         public CompoundCollider hurtbox;
         public float jumpForce;
         public float runSpeed;
@@ -28,12 +27,12 @@ namespace Pratfall.Characters
 
         public override void OnAttack(Vector2 direction)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public override void OnBlock()
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }

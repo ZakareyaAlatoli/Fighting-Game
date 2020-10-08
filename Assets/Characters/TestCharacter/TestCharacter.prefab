@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba46e97791862944ab64dea872c7dd73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 375ab3b911eab93469ec9f4f31a8c0ea, type: 3}
+  charName: Test Character
   worldCollider: {fileID: 457859962220822452}
   hurtbox: {fileID: 457859962837386817}
   jumpForce: 200
@@ -319,7 +321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 689fc7091a60eb741a84b97dbbf1b113, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
