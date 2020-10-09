@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Pratfall
 {
+    public class ReadOnlyAttribute : PropertyAttribute
+    {
+
+    }
+
     [System.Serializable]
     public class Filter<T>
     {

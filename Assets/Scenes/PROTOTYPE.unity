@@ -160,6 +160,7 @@ RectTransform:
   - {fileID: 1816654365}
   - {fileID: 1537294256}
   - {fileID: 2094343960}
+  - {fileID: 2125667626}
   m_Father: {fileID: 1074235738}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1030,7 +1031,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 26
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1041,7 +1042,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: FIGHT
 --- !u!222 &429485255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1145,7 +1146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &518839979
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2122,6 +2123,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -2208,6 +2210,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracked: []
   offset: {x: 0, y: 0, z: -3}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f214790ecbff614aafb4536dbd27661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &991763909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1074235738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3910,7 +3924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1741301815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4271,7 +4285,6 @@ RectTransform:
   - {fileID: 1741301815}
   - {fileID: 179805706}
   - {fileID: 1074235738}
-  - {fileID: 2125667626}
   m_Father: {fileID: 110932849}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5233,7 +5246,7 @@ GameObject:
   - component: {fileID: 2125667628}
   - component: {fileID: 2125667627}
   m_Layer: 5
-  m_Name: Button
+  m_Name: FightButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5246,13 +5259,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125667625}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 429485253}
-  m_Father: {fileID: 1892762454}
-  m_RootOrder: 3
+  m_Father: {fileID: 24341184}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
