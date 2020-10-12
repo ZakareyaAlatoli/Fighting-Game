@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Pratfall
 {
-    public class CompoundCollider : TriggerableCollider
+    public class CompoundCollider : MonoBehaviour
     {
         public TriggerableCollider[] subColliders;
-        public new event System.Action<Trigger> TriggerEntered;
-        public new event System.Action<Trigger> TriggerStayed;
-        public new event System.Action<Trigger> TriggerExited;
+        public event System.Action<Trigger> TriggerEntered;
+        public event System.Action<Trigger> TriggerStayed;
+        public event System.Action<Trigger> TriggerExited;
 
         private void AddTrigger(Trigger other)
         {

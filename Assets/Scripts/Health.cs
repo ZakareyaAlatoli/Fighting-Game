@@ -8,8 +8,8 @@ namespace Pratfall
 {
     public class Health : MonoBehaviour, IHUDString
     {
-        public ClampedInt value;
-        private int previousHealth;
+        public float value;
+        private float previousHealth;
         public event Action<string> HUDStringChanged;
 
         public string GetDisplayableValue()
