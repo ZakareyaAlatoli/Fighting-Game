@@ -9,14 +9,38 @@ namespace Pratfall
     {
         None = 0,
         Shielded = 1,
-        Armored = 2,
-        Invincible = 4,
-        Intangible = 8
+        Intangible = 2
+    }
+    [System.Serializable]
+    public struct HitTags
+    {
+        public int team;
+        public GameObject origin;
+
+        public static bool operator==(HitTags lval, HitTags rval)
+        {
+            if (lval.origin != rval.origin)
+                return false;
+            if (lval.team != rval.team)
+                return false;
+            return true;
+        }
+
+        public static bool operator !=(HitTags lval, HitTags rval)
+        {
+            if (lval.origin == rval.origin)
+                return false;
+            if (lval.team == rval.team)
+                return false;
+            return true;
+        }
     }
 
     public interface IHittable
     {
         void OnHurt(Hitbox hitter);
+        event System.Action<HitResult> Hurt;
+        HitTags hitTags { get; set; }
     }
 
     public struct HitResult
@@ -33,7 +57,7 @@ namespace Pratfall
         /// The object that spawned this hitbox (usually a character)
         /// </summary>
         [Tooltip("The object the hitboxes \"belong\" to. Hitboxes from different origins are processed independently")]
-        public GameObject origin;
+        public HitTags hitTags;
         /// <summary>
         /// Hitboxes in the same layer won't hit the same hurtbox before the rehit time if one of them hits
         /// </summary>
@@ -47,6 +71,8 @@ namespace Pratfall
         [Tooltip("If hitboxes in the same layer hit the same hurtbox in the same frame, the highest priority one takes precedence")]
         public int priority;
         public int rehitTime;
+        public bool damageSelf;
+        public bool damageTeammates;
         public HitFlags ignore;
     }
 

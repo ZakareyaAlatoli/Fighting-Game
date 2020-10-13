@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +8,22 @@ namespace Pratfall
     /// <summary>
     /// Filters hitboxes that can hit this object
     /// </summary>
-    public class HurtboxModel : MonoBehaviour
+    public class HurtboxModel : MonoBehaviour, IHittable
     {
         public Hurtbox[] hurtboxes;
+        [SerializeField]
+        private HitTags _hitTags;
+        public HitTags hitTags
+        {
+            get => _hitTags;
+            set
+            {
+                _hitTags = value;
+                foreach(Hurtbox h in hurtboxes)
+                    h.hitTags = _hitTags;
+            }
+        }
+
 
         void Awake()
         {
@@ -41,7 +55,7 @@ namespace Pratfall
                 if (!hitboxesHitThisFrame.Contains(hitResult.attacker))
                 {
                     hitboxesHitThisFrame.Add(hitResult.attacker);
-                    ProcessHitboxes(hitResult.attacker);
+                    OnHurt(hitResult.attacker);
                 }
             }
         }
@@ -49,14 +63,14 @@ namespace Pratfall
         /// <summary>
         /// Fired when this hurtbox is hurt
         /// </summary>
-        public event System.Action<Hitbox> Hurt;
+        public event System.Action<HitResult> Hurt;
 
         private bool processingHitboxes = false;
         private Dictionary<GameObject, List<Hitbox>> hitThisFrame;
         //Determine which hitbox takes precedence
-        void ProcessHitboxes(Hitbox hitter)
+        public void OnHurt(Hitbox hitter)
         {
-            GameObject source = hitter.hitData.origin;
+            GameObject source = hitter.hitData.hitTags.origin;
             //If we got hit by a hitbox from a new source
             if (!hitThisFrame.ContainsKey(source))
                 hitThisFrame.Add(source, new List<Hitbox>() { hitter });
@@ -96,7 +110,13 @@ namespace Pratfall
                     }
                 }
                 //and hit us with it
-                ReceiveHit(potentialHitter);
+                HitResult result = new HitResult()
+                {
+                    attacker = potentialHitter,
+                    blocked = potentialHitter.hitData.ignore,
+                    success = true
+                };
+                ReceiveHit(result);
             }
             hitThisFrame.Clear();
             hitboxesHitThisFrame.Clear();
@@ -130,10 +150,10 @@ namespace Pratfall
             }
         }
 
-        void ReceiveHit(Hitbox hitter)
+        void ReceiveHit(HitResult result)
         {
-            StartCoroutine(DisableRehit(hitter));
-            Hurt?.Invoke(hitter);
+            StartCoroutine(DisableRehit(result.attacker));
+            Hurt?.Invoke(result);
         }
     }
 }
