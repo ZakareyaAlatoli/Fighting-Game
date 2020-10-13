@@ -7,7 +7,7 @@ namespace Pratfall
     public class CharacterHealth : MonoBehaviour
     {
         public Health health;
-        public Hurtbox hurtbox;
+        public HurtboxModel hurtbox;
 
         void OnHurt(Hitbox hitter)
         {

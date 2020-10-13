@@ -7,7 +7,9 @@ namespace Pratfall
     [RequireComponent(typeof(Collider))]
     public class TriggerableCollider : MonoBehaviour, ITriggerable
     {
-        public Collider associatedCollider { get; private set; }
+        private Collider _attachedCollider;
+        public Collider attachedCollider => _attachedCollider;
+
         public event System.Action<Trigger> TriggerEntered;
         public event System.Action<Trigger> TriggerStayed;
         public event System.Action<Trigger> TriggerExited;
@@ -16,6 +18,6 @@ namespace Pratfall
         public void OnTriggerStayed(Trigger other) { TriggerStayed?.Invoke(other); }
         public void OnTriggerExited(Trigger other) { TriggerExited?.Invoke(other); }
 
-        void Awake() { associatedCollider = GetComponent<Collider>(); }
+        void Awake() { _attachedCollider = GetComponent<Collider>(); }
     }
 }

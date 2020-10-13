@@ -9,6 +9,7 @@ namespace Pratfall
         void OnTriggerEntered(Trigger other);
         void OnTriggerStayed(Trigger other);
         void OnTriggerExited(Trigger other);
+        Collider attachedCollider { get; }
     }
 
     [RequireComponent(typeof(Collider))]

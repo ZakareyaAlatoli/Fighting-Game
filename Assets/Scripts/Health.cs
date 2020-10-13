@@ -9,6 +9,7 @@ namespace Pratfall
     public class Health : MonoBehaviour, IHUDString
     {
         public float value;
+        public HurtboxModel hurtbox;
         private float previousHealth;
         public event Action<string> HUDStringChanged;
 
@@ -21,6 +22,12 @@ namespace Pratfall
         void Start()
         {
             previousHealth = value + 1;
+            hurtbox.Hurt += Hurtbox_Hurt;
+        }
+
+        private void Hurtbox_Hurt(Hitbox obj)
+        {
+            value -= obj.hitData.damage;
         }
 
         // Update is called once per frame

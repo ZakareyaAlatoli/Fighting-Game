@@ -4,6 +4,28 @@ using UnityEngine;
 
 namespace Pratfall
 {
+    [System.Flags]
+    public enum HitFlags
+    {
+        None = 0,
+        Shielded = 1,
+        Armored = 2,
+        Invincible = 4,
+        Intangible = 8
+    }
+
+    public interface IHittable
+    {
+        void OnHurt(Hitbox hitter);
+    }
+
+    public struct HitResult
+    {
+        public bool success;
+        public Hitbox attacker;
+        public HitFlags blocked;
+    }
+
     [System.Serializable]
     public struct HitData
     {
@@ -25,15 +47,31 @@ namespace Pratfall
         [Tooltip("If hitboxes in the same layer hit the same hurtbox in the same frame, the highest priority one takes precedence")]
         public int priority;
         public int rehitTime;
+        public HitFlags ignore;
     }
+
     [RequireComponent(typeof(Trigger))]
     public class Hitbox : MonoBehaviour
     {
         public HitData hitData;
+        private Trigger trigger;  
 
         void Awake()
         {
+            trigger = GetComponent<Trigger>();
             gameObject.layer = LayerMask.NameToLayer("Hitbox");
+        }
+
+        void OnEnable()
+        {
+            trigger.TriggerContinue += OnTriggerContinue;
+        }
+
+        void OnTriggerContinue(ITriggerable obj)
+        {
+            IHittable hittable = obj.attachedCollider.GetComponent<IHittable>();
+            if (hittable != null)
+                hittable.OnHurt(this);
         }
     }
 }
