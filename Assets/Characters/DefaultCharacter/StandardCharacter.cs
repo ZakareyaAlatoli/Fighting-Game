@@ -16,14 +16,10 @@ namespace Pratfall.Characters
         Vector2 finalVelocity;
         public override void OnMove(Vector2 direction)
         {
-            if (detectGround.grounded)
-            {
+            if (detectGround.groundIsBelow)
                 finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
-            }
             else
-            {
                 finalVelocity = Vector2.right * airSpeed * direction.x;
-            }
         }
 
         public override void OnJump()

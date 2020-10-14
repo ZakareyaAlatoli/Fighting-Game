@@ -7,6 +7,8 @@ namespace Pratfall.UI
     [ExecuteAlways][DisallowMultipleComponent][RequireComponent(typeof(IHUDString))]
     public class HUDString : MonoBehaviour
     {
+        public event System.Action<string> HUDStringChanged;
+        private string previousString;
         public IHUDString hudString { get; private set; }
         void Awake()
         {
@@ -24,6 +26,15 @@ namespace Pratfall.UI
             hudString = GetComponent<IHUDString>();
             if (hudString == null)
                 throw new DisplayField.MissingHUDElementException();
+        }
+
+        void Update()
+        {
+            if(previousString != hudString.GetDisplayableValue())
+            {
+                HUDStringChanged?.Invoke(hudString.GetDisplayableValue());
+            }
+            previousString = hudString.GetDisplayableValue();
         }
     }
 }

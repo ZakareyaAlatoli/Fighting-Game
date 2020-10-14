@@ -191,9 +191,9 @@ MonoBehaviour:
   worldCollider: {fileID: 457859962220822452}
   hurtbox: {fileID: 0}
   physics: {fileID: 457859962220822459}
-  jumpForce: 500
+  jumpForce: 600
   runSpeed: 200
-  airSpeed: 50
+  airSpeed: 20
 --- !u!1 &457859962220822455
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   gravityMultiplier: 2
   terminalVelocity: 250
   traction: 16
-  airResistance: 4
+  airResistance: 2
   detectGround: {fileID: 457859962220822458}
 --- !u!114 &457859962220822458
 MonoBehaviour:

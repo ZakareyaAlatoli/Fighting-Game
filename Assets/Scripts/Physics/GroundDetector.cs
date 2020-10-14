@@ -13,11 +13,10 @@ namespace Pratfall
         public float radius;
         public float sphereCastMaxDistance;
 
-        public Vector3 raycastOrigin;
-        public float raycastMaxDistance;
         private bool _grounded;
         public bool grounded { get => _grounded; }
         private bool m_groundIsBelow;
+        public bool groundIsBelow { get => m_groundIsBelow; }
         public Vector3 groundSlope { get; private set; }
 
         public event System.Action Landed;
@@ -30,29 +29,24 @@ namespace Pratfall
                 body = GetComponent<Rigidbody>();
         }
 
-        void Update()
+        void FixedUpdate()
         {
-
             RaycastHit hitInfo;
             m_groundIsBelow = Physics.SphereCast(transform.position + sphereCastorigin, radius, Vector3.down, out hitInfo, sphereCastMaxDistance, detectionMask);
             if (m_groundIsBelow)
             {
-                if (Physics.Raycast(transform.position + raycastOrigin, Vector3.down, out hitInfo, raycastMaxDistance, detectionMask))
-                {
-                    groundSlope = Vector3.Cross(hitInfo.normal, Vector3.forward).normalized;
-                }
-                else
-                {
-                    groundSlope = Vector3.zero;
-                }
+                groundSlope = Vector3.Cross(hitInfo.normal, Vector3.forward).normalized;
             }           
             else
                 groundSlope = Vector3.zero;
             //If we were airborne last frame and grounded this frame
             if (!m_groundedPreviousFrame && m_groundIsBelow)
-            {
+            { 
+                if(body.velocity.y <= 0f)
+                {
                     _grounded = true;
-                    Landed?.Invoke();    
+                    Landed?.Invoke();
+                }
             }
             //If we were grounded last frame and airborne this frame
             else if(m_groundedPreviousFrame && !m_groundIsBelow)

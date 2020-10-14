@@ -12,8 +12,6 @@ namespace Pratfall
         public float health;
         IHittable hittable;
 
-        public event Action<string> HUDStringChanged;
-
         public string GetDisplayableValue()
         {
             return health.ToString();
@@ -21,7 +19,6 @@ namespace Pratfall
 
         void ProcessHit(HitResult result)
         {
-            Debug.Log($"Hit by {result.attacker.name}");
             health -= result.attacker.hitData.damage;
         }
 
@@ -38,16 +35,6 @@ namespace Pratfall
         void OnDisable()
         {
             hittable.Hurt -= ProcessHit;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            if(previousHealth != health)
-            {
-                HUDStringChanged?.Invoke(GetDisplayableValue());
-                previousHealth = health;
-            }
         }
     }
 }

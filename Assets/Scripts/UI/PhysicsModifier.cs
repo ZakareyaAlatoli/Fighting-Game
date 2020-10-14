@@ -18,29 +18,31 @@ namespace Pratfall
         void Awake()
         {
             body = GetComponent<Rigidbody>();
-            detectGround.Landed += DetectGround_Landed;
         }
 
-        void DetectGround_Landed()
-        {
-            Debug.Log("LANDED");
-        }
 
         // Update is called once per frame
         void FixedUpdate()
         {
             Vector3 finalVelocity = body.velocity;
+
+            if (detectGround.groundIsBelow)
+            {
+                if (!detectGround.grounded)
+                {
+                    Vector3 v = body.velocity;
+                    v.y = 0f;
+                    body.velocity = v;
+                }
+            }
             ///DO MODIFICATIONS HERE
-            if (!detectGround.grounded)
+            if (!detectGround.groundIsBelow)
             {
                 finalVelocity.y = Mathf.Lerp(finalVelocity.y, -terminalVelocity, -Physics.gravity.y * (gravityMultiplier / gravityCorrection) * Time.fixedDeltaTime);
                 finalVelocity.x = Mathf.Lerp(finalVelocity.x, 0f, airResistance * Time.fixedDeltaTime);
             }
             else
-            {
                 finalVelocity = Vector3.Lerp(finalVelocity, Vector3.zero, traction * Time.fixedDeltaTime);
-                //finalVelocity.x = Mathf.Lerp(finalVelocity.x, 0f, traction * Time.fixedDeltaTime);
-            }
             ///---------------------
             body.velocity = finalVelocity;
         }

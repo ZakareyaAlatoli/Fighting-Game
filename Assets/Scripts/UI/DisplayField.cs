@@ -13,10 +13,6 @@ namespace Pratfall.UI
     /// </summary>
     public interface IHUDString
     {
-        /// <summary>
-        /// Invoked when the displayable value is changed
-        /// </summary>
-        event System.Action<string> HUDStringChanged;
         string GetDisplayableValue();
     }
 
@@ -29,7 +25,6 @@ namespace Pratfall.UI
         public HUDString displayable;
         //Used to detect when the referenced displayable is changed
         private HUDString previousDisplayable;
-        private IHUDString displayString;
         private TextMeshProUGUI text;
 
         public class MissingHUDElementException : System.Exception { }
@@ -41,14 +36,7 @@ namespace Pratfall.UI
             if(displayable == null)
                 text.text = "NULL";
             else
-            {
-                displayString = displayable.hudString;
-                if (displayString != null)
-                {
-                    text.text = displayString.GetDisplayableValue();
-                    displayString.HUDStringChanged += UpdateString;
-                }
-            }
+                displayable.HUDStringChanged += UpdateString;
         }
 
         void OnValidate()
@@ -58,27 +46,13 @@ namespace Pratfall.UI
             //If the HUD Element was changed...
             if(displayable != previousDisplayable)
             {
-                // to another valid object, then stop listening to the previous object's change in state
-                if(displayString != null)
-                    displayString.HUDStringChanged -= UpdateString;
-                // to null...
-                if (displayable == null)
+                if(previousDisplayable != null)
+                    previousDisplayable.HUDStringChanged -= UpdateString;
+
+                if(displayable != null)
                 {
-                    // and there is no display string
-                    if (displayString != null)
-                        displayString.HUDStringChanged -= UpdateString;
-                    text.text = "NULL";
-                }
-                // to another valid object...
-                else
-                {
-                    displayString = displayable.hudString;
-                    // and that object has retrieved its display string
-                    if(displayString != null)
-                    {
-                        text.text = displayString.GetDisplayableValue();
-                        displayString.HUDStringChanged += UpdateString;
-                    }
+                    displayable.HUDStringChanged += UpdateString;
+                    text.text = displayable.hudString.GetDisplayableValue();
                 }
                 previousDisplayable = displayable;
             }
@@ -86,7 +60,7 @@ namespace Pratfall.UI
 
         void UpdateString(string newString)
         {
-            text.text = displayString.GetDisplayableValue();
+            text.text = displayable.hudString.GetDisplayableValue();
         }
     }
 }

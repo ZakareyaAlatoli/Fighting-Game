@@ -39,7 +39,6 @@ namespace Pratfall
             HitData hitData = hitter.hitData;
             HitFlags pierces = hitter.hitData.ignore;
             HitFlags blocked = ((pierces | resistances) ^ pierces);
-            Debug.Log($"{name} hurt by {hitter.name}");
 
             HitResult result = new HitResult()
             {
