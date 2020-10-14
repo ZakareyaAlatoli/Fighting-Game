@@ -190,8 +190,10 @@ MonoBehaviour:
   charName: Default Character
   worldCollider: {fileID: 457859962220822452}
   hurtbox: {fileID: 0}
+  physics: {fileID: 457859962220822459}
   jumpForce: 500
-  runSpeed: 50
+  runSpeed: 200
+  airSpeed: 50
 --- !u!1 &457859962220822455
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +239,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -271,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityMultiplier: 2
   terminalVelocity: 250
-  traction: 8
+  traction: 16
   airResistance: 4
   detectGround: {fileID: 457859962220822458}
 --- !u!114 &457859962220822458
@@ -286,11 +288,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea53aa40ec955a4bb4568183464ac6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 457859962220822452}
   detectionMask:
     serializedVersion: 2
     m_Bits: 1
-  origin: {x: 0, y: -0.99, z: 0}
-  maxDistance: 0.01
+  sphereCastorigin: {x: 0, y: -0.74, z: 0}
+  radius: 0.25
+  sphereCastMaxDistance: 0.05
+  raycastOrigin: {x: 0, y: -0.99, z: 0}
+  raycastMaxDistance: 0.2
 --- !u!1 &457859962477264849
 GameObject:
   m_ObjectHideFlags: 0

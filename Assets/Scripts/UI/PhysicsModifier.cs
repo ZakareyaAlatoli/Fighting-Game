@@ -18,6 +18,12 @@ namespace Pratfall
         void Awake()
         {
             body = GetComponent<Rigidbody>();
+            detectGround.Landed += DetectGround_Landed;
+        }
+
+        void DetectGround_Landed()
+        {
+            Debug.Log("LANDED");
         }
 
         // Update is called once per frame
@@ -32,7 +38,8 @@ namespace Pratfall
             }
             else
             {
-                finalVelocity.x = Mathf.Lerp(finalVelocity.x, 0f, traction * Time.fixedDeltaTime);
+                finalVelocity = Vector3.Lerp(finalVelocity, Vector3.zero, traction * Time.fixedDeltaTime);
+                //finalVelocity.x = Mathf.Lerp(finalVelocity.x, 0f, traction * Time.fixedDeltaTime);
             }
             ///---------------------
             body.velocity = finalVelocity;
