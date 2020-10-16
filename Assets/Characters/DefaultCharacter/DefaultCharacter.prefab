@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 457859961839146439}
   - component: {fileID: 457859961839146436}
   - component: {fileID: 2399926865897718441}
-  - component: {fileID: 2717469239438491517}
   m_Layer: 9
   m_Name: Eyes
   m_TagString: Untagged
@@ -126,22 +125,6 @@ MonoBehaviour:
     team: 0
     origin: {fileID: 457859961941925037}
   resistances: 0
---- !u!54 &2717469239438491517
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457859961839146433}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &457859961941925037
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,8 +172,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 59406af6607b59e4191619388a8296df, type: 3}
   charName: Default Character
   worldCollider: {fileID: 457859962220822452}
-  hurtbox: {fileID: 0}
+  hurtbox: {fileID: 699088005149608346}
   physics: {fileID: 457859962220822459}
+  hitControl: {fileID: 4851424485695960879}
   jumpForce: 600
   runSpeed: 200
   airSpeed: 20
@@ -309,7 +293,6 @@ GameObject:
   - component: {fileID: 457859962477264855}
   - component: {fileID: 457859962477264852}
   - component: {fileID: 6422319488389157354}
-  - component: {fileID: 1630632744134821854}
   m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
@@ -425,22 +408,6 @@ MonoBehaviour:
     team: 0
     origin: {fileID: 457859961941925037}
   resistances: 0
---- !u!54 &1630632744134821854
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457859962477264849}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &457859962653202728
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +422,6 @@ GameObject:
   - component: {fileID: 457859962653202734}
   - component: {fileID: 457859962653202739}
   - component: {fileID: 6681543672783489197}
-  - component: {fileID: 2415908594058286025}
   m_Layer: 9
   m_Name: HandL
   m_TagString: Untagged
@@ -567,22 +533,6 @@ MonoBehaviour:
     team: 0
     origin: {fileID: 457859961941925037}
   resistances: 0
---- !u!54 &2415908594058286025
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457859962653202728}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &457859962837386819
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,8 +543,8 @@ GameObject:
   m_Component:
   - component: {fileID: 457859962837386818}
   - component: {fileID: 699088005149608346}
-  - component: {fileID: 7658325191749791769}
-  - component: {fileID: 6475602296757786424}
+  - component: {fileID: 4851424485695960879}
+  - component: {fileID: 8022282394559576518}
   m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
@@ -637,7 +587,7 @@ MonoBehaviour:
   _hitTags:
     team: 0
     origin: {fileID: 457859961941925037}
---- !u!114 &7658325191749791769
+--- !u!114 &4851424485695960879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -649,8 +599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4aad564984fe24899d97aaa41b9736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 457859962220822452}
   health: 100
---- !u!114 &6475602296757786424
+--- !u!114 &8022282394559576518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -676,7 +627,6 @@ GameObject:
   - component: {fileID: 457859963380824852}
   - component: {fileID: 457859963380824857}
   - component: {fileID: 867032572826827221}
-  - component: {fileID: 6886456415622755224}
   m_Layer: 9
   m_Name: HandR
   m_TagString: Untagged
@@ -788,19 +738,3 @@ MonoBehaviour:
     team: 0
     origin: {fileID: 457859961941925037}
   resistances: 0
---- !u!54 &6886456415622755224
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457859963380824854}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

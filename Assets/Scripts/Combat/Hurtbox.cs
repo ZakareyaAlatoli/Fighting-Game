@@ -55,20 +55,26 @@ namespace Pratfall
                         result.success = true;
                     else
                         result.success = false;
-                    Hurt?.Invoke(result);
                 }
+                else
+                    result.success = false;
             }
             //If the hitbox has a different origin than me...
             else
             {
-                //and it's from a teammate and it hits friendlies...
-                if((hitData.hitTags.team == _hitTags.team) && hitData.damageTeammates)
+                //and it's from a teammate...
+                if(hitData.hitTags.team == _hitTags.team)
                 {
-                    if (attackPass(hitData.ignore, resistances))
-                        result.success = true;
+                    //and it damages teammates...
+                    if (hitData.damageTeammates)
+                    {
+                        if (attackPass(hitData.ignore, resistances))
+                            result.success = true;
+                        else
+                            result.success = false;
+                    }
                     else
                         result.success = false;
-                    Hurt?.Invoke(result);
                 }
                 //or if it's from an opponent
                 else
@@ -77,9 +83,9 @@ namespace Pratfall
                         result.success = true;
                     else
                         result.success = false;
-                    Hurt?.Invoke(result);
                 }
             }
+            Hurt?.Invoke(result);
         }
     }
 }

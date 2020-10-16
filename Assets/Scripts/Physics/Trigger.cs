@@ -19,9 +19,9 @@ namespace Pratfall
         public event System.Action<ITriggerable> TriggerContinue;
         public event System.Action<ITriggerable> TriggerEnd;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-
+            GetComponent<Collider>().isTrigger = true;
         }
 
         protected void OnTriggerEnter(Collider other)

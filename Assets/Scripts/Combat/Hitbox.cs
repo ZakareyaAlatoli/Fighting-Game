@@ -51,6 +51,14 @@ namespace Pratfall
     }
 
     [System.Serializable]
+    public struct HitBehavior
+    {
+        public float damage;
+        public Vector2 knockback;
+        public float hitStun;
+    }
+
+    [System.Serializable]
     public struct HitData
     {
         /// <summary>
@@ -63,7 +71,7 @@ namespace Pratfall
         /// </summary>
         [Tooltip("Hitboxes in the same layer can't hit a hurtbox one of them has already hit before the rehit time is up")]
         public Hitbox[] layer;
-        public float damage;
+        public HitBehavior hitBehavior;
         /// <summary>
         /// When a hurtbox is struck by multiple hitboxes in the same frame with the same origin
         /// the highest priority one goes through
