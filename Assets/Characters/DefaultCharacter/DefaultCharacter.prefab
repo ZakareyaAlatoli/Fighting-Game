@@ -294,9 +294,7 @@ MonoBehaviour:
     m_Bits: 1
   sphereCastorigin: {x: 0, y: -0.74, z: 0}
   radius: 0.25
-  sphereCastMaxDistance: 0.05
-  raycastOrigin: {x: 0, y: -0.99, z: 0}
-  raycastMaxDistance: 0.2
+  sphereCastMaxDistance: 0.1
 --- !u!1 &457859962477264849
 GameObject:
   m_ObjectHideFlags: 0
