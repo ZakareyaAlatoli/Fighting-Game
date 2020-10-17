@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3643628972000109273}
   - component: {fileID: 3643628972000109272}
   m_Layer: 8
-  m_Name: Sweetspot
+  m_Name: StandardCharJabHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
     layer: {fileID: 0}
     hitBehavior:
       damage: 50
-      knockback: {x: 200, y: 200}
+      knockback: {x: 600, y: 600}
       hitStun: 0.25
     priority: 0
     rehitTime: -1

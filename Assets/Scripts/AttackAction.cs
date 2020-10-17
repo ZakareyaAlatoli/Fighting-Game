@@ -12,8 +12,6 @@ namespace Pratfall
         {
             timeline = GetComponents<DynamicBehavior>();
         }
-        //public DynamicBehavior interruptionBehavior;
-        //public DynamicBehavior completionBehavior;
 
         protected override IEnumerator Behavior()
         {
@@ -24,17 +22,9 @@ namespace Pratfall
             }
         }
 
-        protected override void OnInterrupted()
-        {
-            //interruptionBehavior.Perform();
-            timeline[timeline.Length - 1].Perform();
-        }
+        protected override void OnInterrupted() { timeline[timeline.Length - 1].Perform(); }
 
-        protected override void OnFinished()
-        {
-            //completionBehavior.Perform();
-            timeline[timeline.Length - 1].Perform();
-        }
+        protected override void OnFinished() { timeline[timeline.Length - 1].Perform(); }
     }
 
     /// <summary>

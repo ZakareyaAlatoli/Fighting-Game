@@ -25,14 +25,8 @@ namespace Pratfall.Input
         /// </summary>
         public string header
         {
-            get
-            {
-                return _text.text;
-            }
-            set
-            {
-                _text.text = value;
-            }
+            get => _text.text;
+            set { _text.text = value; }
         }
 
         [HideInInspector]
@@ -48,27 +42,22 @@ namespace Pratfall.Input
             //Fetch the Event System from the Scene
             m_EventSystem = EventSystem.current;
         }
-
-        public void OnAttack(Vector2 direction)
-        {
-            
-        }
-
-        public void OnBlock()
-        {
-            //throw new System.NotImplementedException();
-        }
-
-        public void OnJump()
-        {
-            Select();
-        }
-
+        //INPUT ACTIONS
         public void OnMove(Vector2 direction)
-        {        
+        {
             transform.Translate(direction * speed);
         }
 
+        public void OnAltMove(Vector2 direction) { }
+
+        public void OnJump() { }
+
+        public void OnBlock() { }
+
+        public void OnAttack() { Select(); } 
+
+        public void OnSpecial() { }
+        //END INPUT ACTIONS
         void Update()
         {
             Vector3 pos = transform.position;

@@ -12,9 +12,11 @@ namespace Pratfall.Input
     public interface IControllable
     {
         void OnMove(Vector2 direction);
-        void OnAttack(Vector2 direction);
+        void OnAltMove(Vector2 direction);
         void OnJump();
         void OnBlock();
+        void OnAttack();
+        void OnSpecial();
     }
     /// <summary>
     /// Passes input from an input device to a controllable object
@@ -24,12 +26,16 @@ namespace Pratfall.Input
     {
         public static readonly string MOVE = "Move";
         private InputAction moveAction;
-        public static readonly string ATTACK = "Attack";
-        private InputAction attackAction;
+        public static readonly string ALTMOVE = "AltMove";
+        private InputAction altMoveAction;
         public static readonly string JUMP = "Jump";
         private InputAction jumpAction;
         public static readonly string BLOCK = "Block";
         private InputAction blockAction;
+        public static readonly string ATTACK = "Attack";
+        private InputAction attackAction;
+        public static readonly string SPECIAL = "Special";
+        private InputAction specialAction;
 
         PlayerInput input;
         /// <summary>
@@ -45,21 +51,27 @@ namespace Pratfall.Input
             input = GetComponent<PlayerInput>();
 
             moveAction = input.actions.FindAction(MOVE);
-            attackAction = input.actions.FindAction(ATTACK);
+            altMoveAction = input.actions.FindAction(ALTMOVE);
             jumpAction = input.actions.FindAction(JUMP);
             blockAction = input.actions.FindAction(BLOCK);
+            attackAction = input.actions.FindAction(ATTACK);
+            specialAction = input.actions.FindAction(SPECIAL);
         }
 
         void OnEnable()
         {
             jumpAction.performed += OnJump;
             blockAction.performed += OnBlock;
+            attackAction.performed += OnAttack;
+            specialAction.performed += OnSpecial;
         }
 
         void OnDisable()
         {
             jumpAction.performed -= OnJump;
             blockAction.performed -= OnBlock;
+            attackAction.performed -= OnAttack;
+            specialAction.performed -= OnSpecial;
         }
 
 
@@ -79,12 +91,28 @@ namespace Pratfall.Input
             }
         }
 
+        void OnAttack(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnAttack();
+            }
+        }
+
+        void OnSpecial(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnSpecial();
+            }
+        }
+
         void Update()
         {
             foreach (IControllable controllable in controllables)
             {         
                 controllable.OnMove(moveAction.ReadValue<Vector2>());
-                controllable.OnAttack(attackAction.ReadValue<Vector2>());
+                controllable.OnAltMove(altMoveAction.ReadValue<Vector2>());
             }
         }
 

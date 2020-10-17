@@ -6,7 +6,6 @@ namespace Pratfall.Characters
 {
     public class TestCharacter : BaseCharacter
     {
-        public CompoundCollider hurtbox;
         public float jumpForce;
         public float runSpeed;
 
@@ -15,24 +14,17 @@ namespace Pratfall.Characters
             worldCollider.AddForce(new Vector2(direction.x * runSpeed, 1f));
         }
 
+        public override void OnAltMove(Vector2 direction) { }
+
         public override void OnJump()
         {
             worldCollider.AddForce(Vector2.up * jumpForce);
         }
 
-        new void Start()
-        {
-            base.Start();
-        }
+        public override void OnBlock() { }
 
-        public override void OnAttack(Vector2 direction)
-        {
+        public override void OnAttack() { }
 
-        }
-
-        public override void OnBlock()
-        {
-
-        }
+        public override void OnSpecial() { }
     }
 }

@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack",
+                    "name": "AltMove",
                     "type": "Value",
                     "id": "f532ce35-4076-493f-92eb-47db4a9f9c55",
                     "expectedControlType": "Vector2",
@@ -33,6 +33,22 @@
                     "name": "Block",
                     "type": "Button",
                     "id": "fd85fa8a-8a16-4854-921d-531fe4e29ae1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "af88e162-fc9b-467b-b8c1-1ca531ea63c5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Special",
+                    "type": "Button",
+                    "id": "db04b3c8-cc13-4abf-807d-7015765d9c36",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -112,7 +128,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AltMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -123,7 +139,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AltMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -134,7 +150,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AltMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -145,7 +161,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AltMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -156,7 +172,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AltMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -184,8 +200,8 @@
                 },
                 {
                     "name": "",
-                    "id": "6eb537e1-3222-46b6-93b1-2af528bdecdd",
-                    "path": "<Mouse>/rightButton",
+                    "id": "bf244d78-cf0b-4db0-8e56-be69e533f4b9",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -195,12 +211,67 @@
                 },
                 {
                     "name": "",
-                    "id": "bf244d78-cf0b-4db0-8e56-be69e533f4b9",
-                    "path": "<Keyboard>/leftCtrl",
+                    "id": "06e7de7b-df62-4a42-abdd-37b1f97f7dcf",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83b66d69-cdc9-4f3f-9106-d9f83fa3ab1e",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa0acf50-a8be-4daf-aad0-8a48a51e502c",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6fb39a77-0021-4188-9f08-36e1f203760a",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "239932d2-a18c-4c96-95db-a3605c57c70d",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d57acee-5a5e-4a10-a183-a68ce65084dc",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -31,6 +31,14 @@ namespace Pratfall
             hitThisFrame = new Dictionary<GameObject, List<Hitbox>>();
         }
 
+        void Start()
+        {
+            foreach(Hurtbox h in hurtboxes)
+            {
+                h.hitTags.team = _hitTags.team;
+            }
+        }
+
         void OnEnable()
         {
             foreach(Hurtbox h in hurtboxes)

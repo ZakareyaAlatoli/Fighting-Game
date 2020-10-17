@@ -7,39 +7,16 @@ namespace Pratfall.Debugging
 {  
     public class DebugControllable : MonoBehaviour, IControllable
     {
-        public Rigidbody obj;
-        public float speed;
+        public void OnMove(Vector2 direction) { Debug.Log($"Move Vector: {direction}"); }
 
-        public void OnAttack(Vector2 direction)
-        {
+        public void OnAltMove(Vector2 direction) { Debug.Log($"Alt Move Vector: {direction}"); }
 
-        }
+        public void OnJump() { Debug.Log($"JUMPED"); }
 
-        public void OnBlock()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnBlock() { Debug.Log($"BLOCKED"); }
 
-        public void OnJump()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnAttack() { Debug.Log($"ATTACKED"); }
 
-        public void OnMove(Vector2 direction)
-        {
-            obj.AddForce(new Vector2(direction.x * speed, 0.0f));
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        public void OnSpecial() { Debug.Log($"SPECIALED"); }
     }
 }

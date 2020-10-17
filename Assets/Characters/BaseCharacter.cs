@@ -11,34 +11,39 @@ namespace Pratfall.Characters
     /// </summary>
     public abstract class BaseCharacter : MonoBehaviour, IControllable
     {
-        public int team;
+        protected int _team;
+        public int team {
+            get => _team;
+            set
+            {
+                hurtboxModel.hitTags.team = value;
+                _team = value;
+            }
+        }
         public Sprite sprite;
         public string charName;
         public Rigidbody worldCollider;
+        public HurtboxModel hurtboxModel;
         // Start is called before the first frame update
-        protected virtual void Start()
-        {
-
-        }
+        protected virtual void Start() { }
 
         // Update is called once per frame
-        protected virtual void Update()
-        {
+        protected virtual void Update() { }
 
-        }
+        protected virtual void FixedUpdate() { }
 
-        protected virtual void FixedUpdate()
-        {
-            //
-        }
 
         public abstract void OnMove(Vector2 direction);
 
-        public abstract void OnAttack(Vector2 direction);
+        public abstract void OnAltMove(Vector2 direction);
 
         public abstract void OnJump();
 
+        public abstract void OnAttack();
+
         public abstract void OnBlock();
+
+        public abstract void OnSpecial();
     }
 }
 
