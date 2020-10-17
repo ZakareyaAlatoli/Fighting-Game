@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Pratfall.Characters
 {
-    public class StandardCharacter : Character
+    public class StandardCharacter : BaseCharacter
     {
         public HurtboxModel hurtbox;
         public PhysicsModifier physics;
         public HitController hitControl;
         private GroundDetector detectGround;
+        public AttackAction attack;
         public float jumpForce;
         public float runSpeed;
         public float airSpeed;
@@ -59,7 +60,10 @@ namespace Pratfall.Characters
 
         public override void OnBlock()
         {
-
+            if (!attack.midAction)
+                attack.Begin();
+            else
+                attack.Stop();
         }
     }
 }

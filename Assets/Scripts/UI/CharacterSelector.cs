@@ -12,8 +12,8 @@ namespace Pratfall {
     [RequireComponent(typeof(Button))]
     public class CharacterSelector : MonoBehaviour, ISelectableByPlayer
     {
-        public static event System.Action<PlayerInput, Character> CharacterSelected;
-        public Character characerPrefab;
+        public static event System.Action<PlayerInput, BaseCharacter> CharacterSelected;
+        public BaseCharacter characerPrefab;
         private Button button;
 
         // Start is called before the first frame update

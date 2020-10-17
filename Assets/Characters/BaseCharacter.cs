@@ -9,8 +9,9 @@ namespace Pratfall.Characters
     /// <summary>
     /// Fighters should inherit from this class to handle character-specific mechanics
     /// </summary>
-    public abstract class Character : MonoBehaviour, IControllable
+    public abstract class BaseCharacter : MonoBehaviour, IControllable
     {
+        public int team;
         public Sprite sprite;
         public string charName;
         public Rigidbody worldCollider;

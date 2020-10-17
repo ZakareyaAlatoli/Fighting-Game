@@ -70,7 +70,7 @@ namespace Pratfall
         /// Hitboxes in the same layer won't hit the same hurtbox before the rehit time if one of them hits
         /// </summary>
         [Tooltip("Hitboxes in the same layer can't hit a hurtbox one of them has already hit before the rehit time is up")]
-        public Hitbox[] layer;
+        public HitboxLayer layer;
         public HitBehavior hitBehavior;
         /// <summary>
         /// When a hurtbox is struck by multiple hitboxes in the same frame with the same origin
@@ -104,8 +104,13 @@ namespace Pratfall
         void OnTriggerContinue(ITriggerable obj)
         {
             IHittable hittable = obj.attachedCollider.GetComponent<IHittable>();
-            if (hittable != null)
-                hittable.OnHurt(this);
+            if (gameObject.activeSelf)
+            {
+                if (hittable != null)
+                {
+                    hittable.OnHurt(this);
+                }
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pratfall.Characters
 {
-    public class TestCharacter : Character
+    public class TestCharacter : BaseCharacter
     {
         public CompoundCollider hurtbox;
         public float jumpForce;

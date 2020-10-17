@@ -8,12 +8,12 @@ using UnityEngine.InputSystem;
 namespace Pratfall {
     public class RoundLogic : MonoBehaviour
     {
-        public static Dictionary<InputHandler, Character> characters;
-        public static List<Character> spawnedCharacters;
+        public static Dictionary<InputHandler, BaseCharacter> characters;
+        public static List<BaseCharacter> spawnedCharacters;
         public static event System.Action RoundStarted;
         public static event System.Action RoundEnded;
 
-        public static void QueueCharacter(Character characterPrefab, InputHandler playerIndex)
+        public static void QueueCharacter(BaseCharacter characterPrefab, InputHandler playerIndex)
         {
             if (!characters.ContainsKey(playerIndex))
             {
@@ -31,8 +31,8 @@ namespace Pratfall {
             foreach(InputHandler ih in characters.Keys)
             {
                 GameObject instantiatedCharacter = GameObject.Instantiate(characters[ih].gameObject);
-                spawnedCharacters.Add(instantiatedCharacter.GetComponent<Character>());
-                InputHandler.AssignPlayerToControllable(ih, instantiatedCharacter.GetComponent<Character>());
+                spawnedCharacters.Add(instantiatedCharacter.GetComponent<BaseCharacter>());
+                InputHandler.AssignPlayerToControllable(ih, instantiatedCharacter.GetComponent<BaseCharacter>());
                 RoundStarted?.Invoke();
             }
         }
@@ -45,8 +45,8 @@ namespace Pratfall {
         // Start is called before the first frame update
         void Awake()
         {
-            characters = new Dictionary<InputHandler, Character>();
-            spawnedCharacters = new List<Character>();
+            characters = new Dictionary<InputHandler, BaseCharacter>();
+            spawnedCharacters = new List<BaseCharacter>();
             PlayerSetup.PlayerLeft += PlayerSetup_PlayerLeft;
         }
 

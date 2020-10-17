@@ -8,13 +8,13 @@ namespace Pratfall
     /// <summary>
     /// Governs how a character reacts to hits
     /// </summary>
-    [RequireComponent(typeof(IHittable))]
+    [RequireComponent(typeof(HurtboxModel))]
     public class HitController : MonoBehaviour, UI.IHUDString
     {
         public Rigidbody rb;
         public float hitStunTimer { get; private set; }
         public float health;
-        IHittable hittable;
+        HurtboxModel hittable;
 
         public event System.Action EnteredHitstun;
         public event System.Action LeftHitstun;
@@ -40,7 +40,7 @@ namespace Pratfall
         {
             if (GetComponent<UI.HUDString>() == null)
                 gameObject.AddComponent<UI.HUDString>();
-            hittable = GetComponent<IHittable>();
+            hittable = GetComponent<HurtboxModel>();
         }
 
         void OnEnable()

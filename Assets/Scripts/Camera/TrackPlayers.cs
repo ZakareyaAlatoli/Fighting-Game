@@ -31,7 +31,7 @@ namespace Pratfall
         void RoundLogic_RoundStarted()
         {
             List<Transform> transforms = new List<Transform>();
-            foreach(Character c in RoundLogic.spawnedCharacters)
+            foreach(BaseCharacter c in RoundLogic.spawnedCharacters)
             {
                 transforms.Add(c.worldCollider.transform);
             }

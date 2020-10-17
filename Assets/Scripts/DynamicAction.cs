@@ -20,7 +20,7 @@ namespace Pratfall
             
         }
 
-        private bool midAction;
+        public bool midAction { get; private set; }
         private bool interrupted;
         protected Coroutine coroutine { get; private set; }
         public void Begin() {
@@ -43,9 +43,9 @@ namespace Pratfall
             yield return coroutine = StartCoroutine(Behavior());
             if (!interrupted)
                 OnCompleted();
+            OnFinished();
             midAction = false;
             interrupted = false;
-            OnFinished();
         }
 
         public void Stop()

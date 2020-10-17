@@ -4,45 +4,46 @@ using UnityEngine;
 
 namespace Pratfall
 {
+    [DisallowMultipleComponent]
     public class AttackAction : DynamicAction
     {
-        public DynamicBehavior[] timeline;
+        private DynamicBehavior[] timeline;
+        void Awake()
+        {
+            timeline = GetComponents<DynamicBehavior>();
+        }
+        //public DynamicBehavior interruptionBehavior;
+        //public DynamicBehavior completionBehavior;
 
         protected override IEnumerator Behavior()
         {
             foreach (DynamicBehavior timestamp in timeline)
             {
-                yield return new WaitForSeconds(timestamp.time);
+                yield return new WaitForSeconds(timestamp.delay);
                 timestamp.Perform();
             }
         }
 
+        protected override void OnInterrupted()
+        {
+            //interruptionBehavior.Perform();
+            timeline[timeline.Length - 1].Perform();
+        }
+
         protected override void OnFinished()
         {
-            foreach(DynamicBehavior timestamp in timeline)
-            {
-                timestamp.Undo();
-            }
+            //completionBehavior.Perform();
+            timeline[timeline.Length - 1].Perform();
         }
     }
+
     /// <summary>
     /// Specifies what events should happen over the duration of a move
     /// </summary>
     [System.Serializable]
-    public class DynamicBehavior
+    public abstract class DynamicBehavior : MonoBehaviour
     {
-        /// <summary>
-        /// Time to wait since the last dynamic behavior/ beginning of the move execution
-        /// </summary>
-        public float time;
-        public string message;
-        public void Perform()
-        {
-            Debug.Log(message);
-        }
-        public void Undo()
-        {
-            //
-        }
+        public float delay;
+        public abstract void Perform();
     }
 }

@@ -129,7 +129,8 @@ namespace Pratfall
             if (hitbox.hitData.rehitTime < 0)
                 yield break;
             yield return new WaitForSeconds(hitbox.hitData.rehitTime);
-            DisableCollision(hitbox, false);
+            if(hitbox != null)
+                DisableCollision(hitbox, false);
         }
 
         void DisableCollision(Hitbox hitbox, bool ignore)
@@ -142,7 +143,7 @@ namespace Pratfall
                     Physics.IgnoreCollision(subCollider.attachedCollider, hitboxCollider, ignore);
                     
                 //and collisions between it and the hitbox's associated hitboxes' colliders
-                foreach (Hitbox associatedHitbox in hitbox.hitData.layer)
+                foreach (Hitbox associatedHitbox in hitbox.hitData.layer.hitboxes)
                 {
                     foreach (Collider hitboxCollider in associatedHitbox.GetComponents<Collider>())
                         Physics.IgnoreCollision(subCollider.attachedCollider, hitboxCollider, ignore);

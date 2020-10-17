@@ -29,8 +29,11 @@ namespace Pratfall
             ITriggerable t = other.GetComponent<ITriggerable>();
             if(t != null)
             {
-                t.OnTriggerEntered(this);
-                TriggerStart?.Invoke(t);
+                if (enabled)
+                {
+                    t.OnTriggerEntered(this);
+                    TriggerStart?.Invoke(t);
+                }
             }      
         }
         // Update is called once per frame
@@ -39,8 +42,11 @@ namespace Pratfall
             ITriggerable t = other.GetComponent<ITriggerable>();
             if (t != null)
             {
-                t.OnTriggerStayed(this);
-                TriggerContinue?.Invoke(t);
+                if (enabled)
+                {
+                    t.OnTriggerStayed(this);
+                    TriggerContinue?.Invoke(t);
+                }
             }
         }
 
@@ -49,8 +55,11 @@ namespace Pratfall
             ITriggerable t = other.GetComponent<ITriggerable>();
             if (t != null)
             {
-                t.OnTriggerExited(this);
-                TriggerEnd?.Invoke(t);
+                if (gameObject.activeSelf)
+                {
+                    t.OnTriggerExited(this);
+                    TriggerEnd?.Invoke(t);
+                }
             }
         }
     }

@@ -16,9 +16,9 @@ namespace Pratfall
 
         void OnEnable() { CharacterSelector.CharacterSelected += CharacterSelector_CharacterSelected; }
 
-        void Disable() { CharacterSelector.CharacterSelected += CharacterSelector_CharacterSelected; }
+        void OnDisable() { CharacterSelector.CharacterSelected += CharacterSelector_CharacterSelected; }
 
-        void CharacterSelector_CharacterSelected(PlayerInput player, Characters.Character character)
+        void CharacterSelector_CharacterSelected(PlayerInput player, Characters.BaseCharacter character)
         {
             if(player.playerIndex == slot)
             {
