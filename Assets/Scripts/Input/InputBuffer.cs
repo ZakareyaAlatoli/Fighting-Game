@@ -23,6 +23,23 @@ namespace Pratfall.Input
     public class InputBuffer
     {
         public static float stickDeadzone = 0.3f;
+        readonly static string[] directionalString =
+        {
+            "*", "↑", "↗", "→", "↘", "↓", "↙", "←", "↖"
+        };
+
+        readonly static InputDirection[] opposite =
+        {
+            InputDirection.CENTER,
+            InputDirection.UP,
+            InputDirection.UP_LEFT,
+            InputDirection.LEFT,
+            InputDirection.DOWN_LEFT,
+            InputDirection.DOWN,
+            InputDirection.DOWN_RIGHT,
+            InputDirection.RIGHT,
+            InputDirection.UP_RIGHT
+        };
 
         //-------------------------------
         readonly int size;
@@ -47,7 +64,25 @@ namespace Pratfall.Input
             }
             buffer[size - 1] = item;
         }
-
+        /// <summary>
+        /// Mirrors the left/right facing directions
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        public static InputDirection[] InvertHorizontal(params InputDirection[] pattern)
+        {
+            InputDirection[] result = pattern;
+            for(int i=0; i<result.Length; i++)
+            {
+                result[i] = opposite[(int)result[i]];
+            }
+            return result;
+        }
+        /// <summary>
+        /// Returns an array of inputs in this buffer in order of execution.
+        /// Consecutive identical inputs are condensed into one
+        /// </summary>
+        /// <returns></returns>
         public InputDirection[] MovePattern()
         {
             List<InputDirection> result = new List<InputDirection>();
@@ -77,7 +112,10 @@ namespace Pratfall.Input
             }
             return result.ToArray();
         }
-
+        /// <summary>
+        /// Same as MovePattern() but gives the raw angles of the inputs instead of an InputDirection enum
+        /// </summary>
+        /// <returns></returns>
         public float[] MovePatternAngle()
         {
             List<float> result = new List<float>();
@@ -146,36 +184,7 @@ namespace Pratfall.Input
             string result = "";
             foreach(InputDirection dirs in dir)
             {
-                switch (dirs)
-                {
-                    case InputDirection.CENTER:
-                        result += "*";
-                        break;
-                    case InputDirection.RIGHT:
-                        result += "→";
-                        break;
-                    case InputDirection.UP_RIGHT:
-                        result += "↗";
-                        break;
-                    case InputDirection.UP:
-                        result += "↑";
-                        break;
-                    case InputDirection.UP_LEFT:
-                        result += "↖";
-                        break;
-                    case InputDirection.LEFT:
-                        result += "←";
-                        break;
-                    case InputDirection.DOWN_LEFT:
-                        result += "↙";
-                        break;
-                    case InputDirection.DOWN:
-                        result += "↓";
-                        break;
-                    default:
-                        result += "↘";
-                        break;
-                }
+                result += directionalString[(int)dirs];
             }
             return result;
         }

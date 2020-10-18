@@ -44,6 +44,8 @@ namespace Pratfall.MoveBehaviors
 
                 foreach (Hitbox h in hitboxes[i].hitboxData)
                 {
+                    if(!character.facingRight)
+                        h.hitData.hitBehavior.knockback.x *= -1f;
                     h.hitData.hitTags.origin = hitboxOrigin;
                     h.hitData.hitTags.team = character.team;
 

@@ -12,6 +12,7 @@ namespace Pratfall.Characters
         public float jumpForce;
         public float runSpeed;
         public float airSpeed;
+
         [Header("Moveset")]
         //MOVES
         public float delayBetweenInputBuffer;
@@ -32,6 +33,12 @@ namespace Pratfall.Characters
         public override void OnMove(Vector2 direction)
         {
             inputState.moveValue = direction;
+
+            if (direction.x > 0f && !facingRight)
+                Turn();
+            else if (direction.x < 0f && facingRight)
+                Turn();
+
             //Can only move manually when not in hitstun
             if (hitControl.hitStunTimer <= 0f)
             {
@@ -45,6 +52,10 @@ namespace Pratfall.Characters
                 finalVelocity = Vector3.zero;
             }
         }
+        //Movement related functions
+
+
+
 
         public override void OnAltMove(Vector2 direction) { }
 
@@ -57,7 +68,11 @@ namespace Pratfall.Characters
 
         public override void OnAttack()
         {
-            if (ATTACK_JAB.MatchInput(inputBuffer.MovePattern()))
+            InputDirection[] bufferContents = inputBuffer.MovePattern();
+            if (!facingRight)
+                bufferContents = InputBuffer.InvertHorizontal(bufferContents);
+
+            if (ATTACK_JAB.MatchInput(bufferContents))
                 ATTACK_JAB.PerformMove();
         }
         

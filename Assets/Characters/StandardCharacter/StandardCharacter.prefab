@@ -180,10 +180,12 @@ MonoBehaviour:
   jumpForce: 800
   runSpeed: 160
   airSpeed: 20
+  facingRight: 1
   delayBetweenInputBuffer: 0.016
   ATTACK_JAB:
     commandInput: 050000000400000003000000
     moveToPerform: {fileID: 7255117261735006890}
+  turnSpeed: 20
 --- !u!1 &457859962220822455
 GameObject:
   m_ObjectHideFlags: 0
