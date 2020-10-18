@@ -38,6 +38,7 @@ namespace Pratfall.Input
         private InputAction specialAction;
 
         PlayerInput input;
+        public int port { get => input.playerIndex; }
         /// <summary>
         /// This object passes its inputs to any object that implements IControllable
         /// </summary>

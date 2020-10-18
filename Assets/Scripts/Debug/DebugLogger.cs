@@ -10,7 +10,5 @@ namespace Pratfall.Debugging
         {
             Debug.Log(message);
         }
-        // Start is called before the first frame update
-        void Start() { }
     }
 }

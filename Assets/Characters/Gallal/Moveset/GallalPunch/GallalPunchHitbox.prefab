@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3643628972000109273}
   - component: {fileID: 3643628972000109272}
   m_Layer: 8
-  m_Name: StandardCharJabHitbox
+  m_Name: GallalPunchHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3643628972000109267}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -127,11 +127,11 @@ MonoBehaviour:
       origin: {fileID: 0}
     layer: {fileID: 0}
     hitBehavior:
-      damage: 50
-      knockback: {x: 600, y: 600}
-      hitStun: 0.25
+      damage: 100
+      knockback: {x: 1000, y: 1000}
+      hitStun: 1
     priority: 0
-    rehitTime: 0.5
+    rehitTime: -1
     damageSelf: 0
     damageTeammates: 0
     ignore: 0

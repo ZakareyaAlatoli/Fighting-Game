@@ -23,7 +23,9 @@ namespace Pratfall.Characters
         public Sprite sprite;
         public string charName;
         public Rigidbody worldCollider;
+        public PhysicsModifier physics;
         public HurtboxModel hurtboxModel;
+        public HitController hitControl;
         // Start is called before the first frame update
         protected virtual void Start() { }
 

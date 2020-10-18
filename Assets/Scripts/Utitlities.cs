@@ -240,4 +240,24 @@ namespace Pratfall
         }
     }
 
+    public static class MathLogic
+    {
+        public static bool InRange(float value, float lowerBound, bool inclusiveLower, float upperBound, bool inclusiveUpper)
+        {
+            if (inclusiveLower)
+            {
+                if (inclusiveUpper)
+                    return (value >= lowerBound && value <= upperBound);
+                else
+                    return (value >= lowerBound && value < upperBound);
+            }
+            else
+            {
+                if (inclusiveUpper)
+                    return (value > lowerBound && value <= upperBound);
+                else
+                    return (value > lowerBound && value < upperBound);
+            }
+        }
+    }
 }

@@ -36,24 +36,21 @@ namespace Pratfall
             if (m_groundIsBelow)
             {
                 groundSlope = Vector3.Cross(hitInfo.normal, Vector3.forward).normalized;
-            }           
-            else
-                groundSlope = Vector3.zero;
-            //If we were airborne last frame and grounded this frame
-            if (!m_groundedPreviousFrame && m_groundIsBelow)
-            { 
-                if(body.velocity.y <= 0f)
+                if (!m_groundedPreviousFrame)
                 {
                     _grounded = true;
                     Landed?.Invoke();
                 }
             }
-            //If we were grounded last frame and airborne this frame
-            else if(m_groundedPreviousFrame && !m_groundIsBelow)
+            else
             {
-                _grounded = false;
-                BecomeAirborne?.Invoke();
-            }
+                groundSlope = Vector3.zero;
+                if (m_groundedPreviousFrame)
+                {
+                    _grounded = false;
+                    BecomeAirborne?.Invoke();
+                }
+            }        
 
             m_groundedPreviousFrame = _grounded;
         }

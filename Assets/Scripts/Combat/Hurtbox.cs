@@ -46,18 +46,22 @@ namespace Pratfall
                 blocked = blocked
             };
             //If the hitbox has the same origin as me...
-            if(hitData.hitTags.origin == _hitTags.origin)
+            if (hitData.hitTags.origin == _hitTags.origin)
             {
                 //and self-damages...
                 if (hitData.damageSelf)
                 {
-                    if(attackPass(hitData.ignore, resistances))
+                    
+                    if (attackPass(hitData.ignore, resistances))
                         result.success = true;
                     else
                         result.success = false;
                 }
                 else
+                {
                     result.success = false;
+                }
+                    
             }
             //If the hitbox has a different origin than me...
             else

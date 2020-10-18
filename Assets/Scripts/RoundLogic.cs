@@ -35,13 +35,14 @@ namespace Pratfall {
             {
                 //Create character
                 GameObject instantiatedCharacter = GameObject.Instantiate(characters[ih].gameObject);
+                BaseCharacter selectedCharacter = instantiatedCharacter.GetComponent<BaseCharacter>();
+                instantiatedCharacter.name = $"{selectedCharacter.charName} (P{ih.port + 1})";
 
                 //Maintain list of spawned characters
                 spawnedCharacters.Add(instantiatedCharacter.GetComponent<BaseCharacter>());
 
                 //Set team of spawned character
-                //TODO: Improve logic for this
-                instantiatedCharacter.GetComponent<BaseCharacter>().team = ih.GetHashCode();
+                instantiatedCharacter.GetComponent<BaseCharacter>().team = ih.port + 1;
 
                 //Give player control of their character
                 InputHandler.AssignPlayerToControllable(ih, instantiatedCharacter.GetComponent<BaseCharacter>());

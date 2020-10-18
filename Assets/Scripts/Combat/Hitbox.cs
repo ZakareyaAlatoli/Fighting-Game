@@ -17,20 +17,11 @@ namespace Pratfall
         public int team;
         public GameObject origin;
 
-        public static bool operator==(HitTags lval, HitTags rval)
+        public bool Matches(HitTags rval)
         {
-            if (lval.origin != rval.origin)
+            if (origin != rval.origin)
                 return false;
-            if (lval.team != rval.team)
-                return false;
-            return true;
-        }
-
-        public static bool operator !=(HitTags lval, HitTags rval)
-        {
-            if (lval.origin == rval.origin)
-                return false;
-            if (lval.team == rval.team)
+            if (team != rval.team)
                 return false;
             return true;
         }
@@ -65,13 +56,11 @@ namespace Pratfall
         /// The object that spawned this hitbox (usually a character)
         /// </summary>
         [Tooltip("The object the hitboxes \"belong\" to. Hitboxes from different origins are processed independently")]
-        [HideInInspector]
         public HitTags hitTags;
         /// <summary>
         /// Hitboxes in the same layer won't hit the same hurtbox before the rehit time if one of them hits
         /// </summary>
         [Tooltip("Hitboxes in the same layer can't hit a hurtbox one of them has already hit before the rehit time is up")]
-        [HideInInspector]
         public HitboxLayer layer;
         public HitBehavior hitBehavior;
         /// <summary>
@@ -80,7 +69,7 @@ namespace Pratfall
         /// </summary>
         [Tooltip("If hitboxes in the same layer hit the same hurtbox in the same frame, the highest priority one takes precedence")]
         public int priority;
-        public int rehitTime;
+        public float rehitTime;
         public bool damageSelf;
         public bool damageTeammates;
         public HitFlags ignore;
@@ -101,6 +90,10 @@ namespace Pratfall
         void OnEnable()
         {
             trigger.TriggerContinue += OnTriggerContinue;
+        }
+        void OnDisable()
+        {
+            trigger.TriggerContinue -= OnTriggerContinue;
         }
 
         void OnTriggerContinue(ITriggerable obj)

@@ -4,22 +4,18 @@ using UnityEngine;
 
 namespace Pratfall.Characters
 {
-    public class TestCharacter : BaseCharacter
+    public class FighterBlocky : BaseCharacter
     {
-        public float jumpForce;
-        public float runSpeed;
+        public float speed;
 
         public override void OnMove(Vector2 direction)
         {
-            worldCollider.AddForce(new Vector2(direction.x * runSpeed, 1f));
+            worldCollider.AddForce(direction * speed);
         }
 
         public override void OnAltMove(Vector2 direction) { }
 
-        public override void OnJump()
-        {
-            worldCollider.AddForce(Vector2.up * jumpForce);
-        }
+        public override void OnJump() { }
 
         public override void OnBlock() { }
 

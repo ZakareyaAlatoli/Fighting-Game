@@ -1,32 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pratfall.Input;
 
 namespace Pratfall.Characters
 {
     public class StandardCharacter : BaseCharacter
     {
-        public PhysicsModifier physics;
-        public HitController hitControl;
-        private GroundDetector detectGround;
+        public GroundDetector detectGround;
         //PHYSICS PROPERTIES
         public float jumpForce;
         public float runSpeed;
         public float airSpeed;
-        [Space(10f)]
+        [Header("Moveset")]
         //MOVES
-        public AttackAction ATTACK_JAB;
-        public AttackAction SPECIAL_NEUTRAL;
+        public float delayBetweenInputBuffer;
+        float _timeBeforeBufferUpdate;
+        public AttackMove ATTACK_JAB;
+
+        InputBuffer inputBuffer;
+        InputState inputState;
 
         void Awake()
         {
-            detectGround = physics.detectGround;
+            inputBuffer = new InputBuffer(60);
+            _timeBeforeBufferUpdate = delayBetweenInputBuffer;
         }
 
         Vector2 finalVelocity;
         //INPUT ACTIONS
         public override void OnMove(Vector2 direction)
         {
+            inputState.moveValue = direction;
             //Can only move manually when not in hitstun
             if (hitControl.hitStunTimer <= 0f)
             {
@@ -52,16 +57,25 @@ namespace Pratfall.Characters
 
         public override void OnAttack()
         {
-            if (!ATTACK_JAB.midAction)
-                ATTACK_JAB.Begin();
+            if (ATTACK_JAB.MatchInput(inputBuffer.MovePattern()))
+                ATTACK_JAB.PerformMove();
         }
         
         public override void OnSpecial()
         {
-            if (!SPECIAL_NEUTRAL.midAction)
-                SPECIAL_NEUTRAL.Begin();
+
         }
         //END INPUT ACTIONS
+        new void Update()
+        {
+            if (_timeBeforeBufferUpdate < 0f)
+            {
+                _timeBeforeBufferUpdate = delayBetweenInputBuffer;
+                inputBuffer.Next(inputState);
+            }
+            _timeBeforeBufferUpdate -= Time.deltaTime;
+        }
+
 
         new void FixedUpdate()
         {

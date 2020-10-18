@@ -42,7 +42,7 @@ namespace Pratfall.MoveBehaviors
                 hitboxInstances.Add(instance);
                 hitboxes[i].hitboxData = instance.GetComponentsInChildren<Hitbox>();
 
-                foreach(Hitbox h in hitboxes[i].hitboxData)
+                foreach (Hitbox h in hitboxes[i].hitboxData)
                 {
                     h.hitData.hitTags.origin = hitboxOrigin;
                     h.hitData.hitTags.team = character.team;
@@ -50,12 +50,21 @@ namespace Pratfall.MoveBehaviors
                     h.hitData.layer = hitboxLayer;
                     hitboxLayer.hitboxes.Add(h);
                 }
-                if(hitboxes[i].attachmentPoint != null)
+                HitboxAttachment attach = hitboxes[i];
+                if(attach.attachmentPoint != null)
                 {
-                    instance.transform.SetParent(hitboxes[i].attachmentPoint);
-                    instance.transform.localPosition = hitboxes[i].offset;
-                    instance.transform.localRotation = Quaternion.Euler(hitboxes[i].rotation);
+                    StartCoroutine(MaintainHitboxPosition(instance, attach.attachmentPoint, attach.offset, attach.rotation));
                 }
+            }
+        }
+
+        IEnumerator MaintainHitboxPosition(GameObject hitbox, Transform parent, Vector3 offset, Vector3 rotation)
+        {
+            while(hitbox != null)
+            {
+                hitbox.transform.rotation = parent.rotation;
+                hitbox.transform.position = parent.position + offset;
+                yield return null;
             }
         }
     }
