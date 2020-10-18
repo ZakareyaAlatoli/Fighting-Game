@@ -30,6 +30,7 @@ namespace Pratfall
                 if (midAction)
                     OnStartMidAction();
                 else {
+                    OnStart();
                     midAction = true;
                     StartCoroutine(CR_Begin());
                 }
@@ -59,6 +60,7 @@ namespace Pratfall
             }
         }
         protected virtual IEnumerator Behavior() { yield return null; }
+        protected virtual void OnStart() { }
         protected virtual void OnFailedStart() { }
         protected virtual void OnStartMidAction() { }
         protected virtual void OnInterrupted() { }

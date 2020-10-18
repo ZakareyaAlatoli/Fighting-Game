@@ -22,9 +22,23 @@ namespace Pratfall
             }
         }
 
-        protected override void OnInterrupted() { timeline[timeline.Length - 1].Perform(); }
-
-        protected override void OnFinished() { timeline[timeline.Length - 1].Perform(); }
+        public event System.Action<AttackAction> Started;
+        protected override void OnStart()
+        {
+            Started?.Invoke(this);
+        }
+        public event System.Action<AttackAction> Interrupted;
+        protected override void OnInterrupted()
+        {
+            timeline[timeline.Length - 1].Perform();
+            Interrupted?.Invoke(this);
+        }
+        public event System.Action<AttackAction> Completed;
+        protected override void OnFinished()
+        {
+            timeline[timeline.Length - 1].Perform();
+            Completed?.Invoke(this);
+        }
     }
 
     /// <summary>

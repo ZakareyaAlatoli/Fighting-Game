@@ -7,23 +7,25 @@ namespace Pratfall.Characters
 {
     public class StandardCharacter : BaseCharacter
     {
+        [Header("Physics")]
         public GroundDetector detectGround;
         //PHYSICS PROPERTIES
         public float jumpForce;
         public float runSpeed;
         public float airSpeed;
 
-        [Header("Moveset")]
+        [Header("Input")]
         //MOVES
+        public Moveset moveset;
         public float delayBetweenInputBuffer;
         float _timeBeforeBufferUpdate;
-        public AttackMove ATTACK_JAB;
 
         InputBuffer inputBuffer;
         InputState inputState;
 
         void Awake()
         {
+            //TODO make this not a magic number
             inputBuffer = new InputBuffer(60);
             _timeBeforeBufferUpdate = delayBetweenInputBuffer;
         }
@@ -66,14 +68,30 @@ namespace Pratfall.Characters
 
         public override void OnBlock() { }
 
+
+        void MoveFinished(AttackAction move)
+        {
+            move.Completed -= MoveFinished;
+        }
+        void MoveStarted(AttackAction move)
+        {
+            move.Started -= MoveStarted;
+        }
+
         public override void OnAttack()
         {
             InputDirection[] bufferContents = inputBuffer.MovePattern();
             if (!facingRight)
                 bufferContents = InputBuffer.InvertHorizontal(bufferContents);
 
-            if (ATTACK_JAB.MatchInput(bufferContents))
-                ATTACK_JAB.PerformMove();
+            AttackMove attackMove = moveset.ParseInput(bufferContents);
+
+            if(attackMove != null)
+            {
+                attackMove.moveToPerform.Completed += MoveFinished;
+                attackMove.moveToPerform.Started += MoveStarted;
+                attackMove.PerformMove();
+            }
         }
         
         public override void OnSpecial()
