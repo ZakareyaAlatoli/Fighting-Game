@@ -22,33 +22,57 @@ namespace Pratfall
 
         public bool midAction { get; private set; }
         private bool interrupted;
-        protected Coroutine coroutine { get; private set; }
+        private Coroutine coroutine;
+
+        public event System.Action Started;
+        protected void InvokeStart() { Started?.Invoke(); }
+        public event System.Action StartedMidAction;
+        protected void InvokeStartMidAction() { StartedMidAction?.Invoke(); }
+        public event System.Action StartFailed;
+        protected void InvokeStartFailed() { StartFailed?.Invoke(); }
         public void Begin() {
             interrupted = false;
             if (enabled)
             {
                 if (midAction)
+                {
                     OnStartMidAction();
+                    StartedMidAction?.Invoke();
+                }
                 else {
                     OnStart();
+                    Started?.Invoke();
                     midAction = true;
                     StartCoroutine(CR_Begin());
                 }
             }
             else
+            {
                 OnFailedStart();
+                StartFailed?.Invoke();
+            }  
         }
 
-        protected IEnumerator CR_Begin()
+        public event System.Action FullyCompleted;
+        protected void InvokeFullyCompleted() { FullyCompleted?.Invoke(); }
+        public event System.Action Ended;
+        protected void InvokeEnded() { Ended?.Invoke(); }
+        private IEnumerator CR_Begin()
         {
             yield return coroutine = StartCoroutine(Behavior());
             if (!interrupted)
+            {
                 OnCompleted();
+                FullyCompleted?.Invoke();
+            }
             OnFinished();
+            Ended?.Invoke();
             midAction = false;
             interrupted = false;
         }
 
+        public event System.Action Interrupted;
+        protected void InvokeInterrupted() { Interrupted?.Invoke(); }
         public void Stop()
         {
             if (midAction)
@@ -57,6 +81,7 @@ namespace Pratfall
                 StopCoroutine(coroutine);
                 midAction = false;
                 OnInterrupted();
+                Interrupted?.Invoke();
             }
         }
         protected virtual IEnumerator Behavior() { yield return null; }

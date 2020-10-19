@@ -10,6 +10,24 @@ namespace Pratfall {
         {
             hitboxes = new List<Hitbox>();
         }
-        public List<Hitbox> hitboxes;
+        public event System.Action<HurtboxModel> HitCallback;
+        public List<Hitbox> hitboxes { get; private set; }
+        public void Add(Hitbox item)
+        {
+            hitboxes.Add(item);
+            item.Hit += OnHit;
+        }
+        void OnDisable()
+        {
+            foreach(Hitbox h in hitboxes)
+            {
+                h.Hit -= OnHit;
+            }
+        }
+        void OnHit(HurtboxModel target)
+        {
+            HitCallback?.Invoke(target);
+        }
+
     }
 }

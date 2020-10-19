@@ -7,8 +7,6 @@ namespace Pratfall.Characters
     public class FighterGallal : BaseCharacter
     {
         public float speed;
-        [Header("Moveset")]
-        public AttackAction GALLAL_PUNCH;
 
         public override void OnMove(Vector2 direction)
         {
@@ -22,10 +20,7 @@ namespace Pratfall.Characters
 
         public override void OnBlock() { }
 
-        public override void OnAttack()
-        {
-            GALLAL_PUNCH.Begin();
-        }
+        public override void OnAttack() { }
 
         public override void OnSpecial() { }
     }

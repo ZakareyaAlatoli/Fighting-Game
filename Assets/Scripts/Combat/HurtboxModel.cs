@@ -163,6 +163,7 @@ namespace Pratfall
         {
             StartCoroutine(DisableRehit(result.attacker));
             Hurt?.Invoke(result);
+            result.attacker.HitCallback(this);
         }
     }
 }

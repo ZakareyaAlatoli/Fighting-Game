@@ -12,11 +12,5 @@ namespace Pratfall.Debugging
         {
             target.TriggerEntered += target => Debug.Log(target.name + " triggered " + name);
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

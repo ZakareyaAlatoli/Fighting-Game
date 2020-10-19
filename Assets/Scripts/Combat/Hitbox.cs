@@ -79,7 +79,12 @@ namespace Pratfall
     public class Hitbox : MonoBehaviour
     {
         public HitData hitData;
-        private Trigger trigger;  
+        private Trigger trigger;
+        public event System.Action<HurtboxModel> Hit;
+        public void HitCallback(HurtboxModel victim)
+        {
+            Hit?.Invoke(victim);
+        }
 
         void Awake()
         {
@@ -99,7 +104,7 @@ namespace Pratfall
         void OnTriggerContinue(ITriggerable obj)
         {
             IHittable hittable = obj.attachedCollider.GetComponent<IHittable>();
-            if (gameObject.activeSelf)
+            if (enabled)
             {
                 if (hittable != null)
                 {

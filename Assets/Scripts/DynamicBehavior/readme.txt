@@ -1,1 +1,0 @@
-A "DynamicBehavior" is only supposed to be used with "AttackAction". It specifies a behavior that occurs when an attack is performed.

@@ -69,15 +69,6 @@ namespace Pratfall.Characters
         public override void OnBlock() { }
 
 
-        void MoveFinished(AttackAction move)
-        {
-            move.Completed -= MoveFinished;
-        }
-        void MoveStarted(AttackAction move)
-        {
-            move.Started -= MoveStarted;
-        }
-
         public override void OnAttack()
         {
             InputDirection[] bufferContents = inputBuffer.MovePattern();
@@ -88,8 +79,6 @@ namespace Pratfall.Characters
 
             if(attackMove != null)
             {
-                attackMove.moveToPerform.Completed += MoveFinished;
-                attackMove.moveToPerform.Started += MoveStarted;
                 attackMove.PerformMove();
             }
         }

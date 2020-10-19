@@ -55,7 +55,7 @@ namespace Pratfall
             ITriggerable t = other.GetComponent<ITriggerable>();
             if (t != null)
             {
-                if (gameObject.activeSelf)
+                if (enabled)
                 {
                     t.OnTriggerExited(this);
                     TriggerEnd?.Invoke(t);

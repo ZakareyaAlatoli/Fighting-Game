@@ -9,7 +9,7 @@ namespace Pratfall
     public class AttackMove
     {
         public InputDirection[] commandInput;
-        public AttackAction moveToPerform;
+        public BaseAttack moveToPerform;
         
         //Checks to see if the correct directional inputs were made to perform this move
         public bool MatchInput(InputDirection[] inputFeed)
