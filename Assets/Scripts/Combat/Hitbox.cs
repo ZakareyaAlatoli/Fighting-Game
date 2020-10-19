@@ -108,6 +108,8 @@ namespace Pratfall
             {
                 if (hittable != null)
                 {
+                    if (hitData.layer == null)
+                        hitData.layer = new HitboxLayer(this);
                     hittable.OnHurt(this);
                 }
             }

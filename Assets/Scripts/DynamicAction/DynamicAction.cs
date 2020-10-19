@@ -24,12 +24,12 @@ namespace Pratfall
         private bool interrupted;
         private Coroutine coroutine;
 
-        public event System.Action Started;
-        protected void InvokeStart() { Started?.Invoke(); }
-        public event System.Action StartedMidAction;
-        protected void InvokeStartMidAction() { StartedMidAction?.Invoke(); }
-        public event System.Action StartFailed;
-        protected void InvokeStartFailed() { StartFailed?.Invoke(); }
+        public event System.Action<DynamicAction> Started;
+        protected void InvokeStart() { Started?.Invoke(this); }
+        public event System.Action<DynamicAction> StartedMidAction;
+        protected void InvokeStartMidAction() { StartedMidAction?.Invoke(this); }
+        public event System.Action<DynamicAction> StartFailed;
+        protected void InvokeStartFailed() { StartFailed?.Invoke(this); }
         public void Begin() {
             interrupted = false;
             if (enabled)
@@ -37,11 +37,11 @@ namespace Pratfall
                 if (midAction)
                 {
                     OnStartMidAction();
-                    StartedMidAction?.Invoke();
+                    StartedMidAction?.Invoke(this);
                 }
                 else {
                     OnStart();
-                    Started?.Invoke();
+                    Started?.Invoke(this);
                     midAction = true;
                     StartCoroutine(CR_Begin());
                 }
@@ -49,30 +49,30 @@ namespace Pratfall
             else
             {
                 OnFailedStart();
-                StartFailed?.Invoke();
+                StartFailed?.Invoke(this);
             }  
         }
 
-        public event System.Action FullyCompleted;
-        protected void InvokeFullyCompleted() { FullyCompleted?.Invoke(); }
-        public event System.Action Ended;
-        protected void InvokeEnded() { Ended?.Invoke(); }
+        public event System.Action<DynamicAction> FullyCompleted;
+        protected void InvokeFullyCompleted() { FullyCompleted?.Invoke(this); }
+        public event System.Action<DynamicAction> Ended;
+        protected void InvokeEnded() { Ended?.Invoke(this); }
         private IEnumerator CR_Begin()
         {
             yield return coroutine = StartCoroutine(Behavior());
             if (!interrupted)
             {
                 OnCompleted();
-                FullyCompleted?.Invoke();
+                FullyCompleted?.Invoke(this);
             }
             OnFinished();
-            Ended?.Invoke();
+            Ended?.Invoke(this);
             midAction = false;
             interrupted = false;
         }
 
-        public event System.Action Interrupted;
-        protected void InvokeInterrupted() { Interrupted?.Invoke(); }
+        public event System.Action<DynamicAction> Interrupted;
+        protected void InvokeInterrupted() { Interrupted?.Invoke(this); }
         public void Stop()
         {
             if (midAction)
@@ -81,7 +81,7 @@ namespace Pratfall
                 StopCoroutine(coroutine);
                 midAction = false;
                 OnInterrupted();
-                Interrupted?.Invoke();
+                Interrupted?.Invoke(this);
             }
         }
         protected virtual IEnumerator Behavior() { yield return null; }

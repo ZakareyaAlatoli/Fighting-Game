@@ -26,7 +26,12 @@ namespace Pratfall.Characters
         public PhysicsModifier physics;
         public HurtboxModel hurtboxModel;
         public HitController hitControl;
- 
+
+        void Awake()
+        {
+            facingRight = true;
+        }
+
         // Start is called before the first frame update
         protected virtual void Start() { }
 

@@ -16,7 +16,8 @@ namespace Pratfall.Characters
 
         [Header("Input")]
         //MOVES
-        public Moveset moveset;
+        public Moveset groundedMoveset;
+        public Moveset aerialMoveset;
         public float delayBetweenInputBuffer;
         float _timeBeforeBufferUpdate;
 
@@ -35,16 +36,18 @@ namespace Pratfall.Characters
         public override void OnMove(Vector2 direction)
         {
             inputState.moveValue = direction;
-
-            if (direction.x > 0f && !facingRight)
-                Turn();
-            else if (direction.x < 0f && facingRight)
-                Turn();
+            if (detectGround.grounded && !moveLockout)
+            {
+                if (direction.x > 0f && !facingRight)
+                    Turn();
+                else if (direction.x < 0f && facingRight)
+                    Turn();
+            }
 
             //Can only move manually when not in hitstun
             if (hitControl.hitStunTimer <= 0f)
             {
-                if (detectGround.groundIsBelow)
+                if (detectGround.groundIsBelow && !moveLockout)
                     finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
                 else
                     finalVelocity = Vector2.right * airSpeed * direction.x;
@@ -63,26 +66,55 @@ namespace Pratfall.Characters
 
         public override void OnJump()
         {
-            worldCollider.AddForce(Vector2.up * jumpForce);
+            if(!moveLockout && detectGround.grounded)
+                worldCollider.AddForce(Vector2.up * jumpForce);
         }
 
         public override void OnBlock() { }
 
 
+
+
+
+        //When the player presses the Attack button, the game will pass the input
+        //buffer to the Movelist. If the input buffer has a string of directional
+        //inputs corresponding to a move, that move will be performed
+        bool moveLockout;
         public override void OnAttack()
         {
             InputDirection[] bufferContents = inputBuffer.MovePattern();
             if (!facingRight)
                 bufferContents = InputBuffer.InvertHorizontal(bufferContents);
 
-            AttackMove attackMove = moveset.ParseInput(bufferContents);
+            AttackMove attackMove;
+            if (detectGround.grounded)
+                attackMove = groundedMoveset.ParseInput(bufferContents);
+            else
+                attackMove = aerialMoveset.ParseInput(bufferContents);
 
             if(attackMove != null)
             {
-                attackMove.PerformMove();
+                if (!moveLockout)
+                {
+                    attackMove.moveToPerform.Started += OnMoveBegin;
+                    attackMove.PerformMove();
+                    attackMove.moveToPerform.enabled = false;
+                    moveLockout = true;
+                }
             }
         }
-        
+        void OnMoveBegin(DynamicAction move)
+        {
+            move.FullyCompleted += OnEndMove;
+        }
+        void OnEndMove(DynamicAction move)
+        {
+            move.Started -= OnMoveBegin;
+            move.FullyCompleted -= OnEndMove;
+            move.enabled = true;
+            moveLockout = false;
+        }
+
         public override void OnSpecial()
         {
 

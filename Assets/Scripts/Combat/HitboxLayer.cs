@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pratfall {
-
-    public class HitboxLayer : MonoBehaviour
+    /// <summary>
+    /// Groups hitboxes together. Hitboxes in the same layer cannot hit the same hurtbox
+    /// at the same time.
+    /// </summary>
+    public class HitboxLayer
     {
-        void Awake()
+        public HitboxLayer()
         {
             hitboxes = new List<Hitbox>();
         }
-        public event System.Action<HurtboxModel> HitCallback;
+        public HitboxLayer(params Hitbox[] items)
+        {
+            hitboxes = new List<Hitbox>();
+            foreach(Hitbox h in items)
+            {
+                Add(h);
+            }
+        }
+
         public List<Hitbox> hitboxes { get; private set; }
         public void Add(Hitbox item)
         {
             hitboxes.Add(item);
-            item.Hit += OnHit;
-        }
-        void OnDisable()
-        {
-            foreach(Hitbox h in hitboxes)
-            {
-                h.Hit -= OnHit;
-            }
-        }
-        void OnHit(HurtboxModel target)
-        {
-            HitCallback?.Invoke(target);
-        }
+            item.hitData.layer = this;
 
+        }
     }
 }
