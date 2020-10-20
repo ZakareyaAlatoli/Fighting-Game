@@ -37,7 +37,6 @@ namespace Pratfall.Characters
             shield.shieldBubble.hitTags.team = team;
             FollowObject(shield.transform, worldCollider.transform);
             //Handle behavior when put into hitstun
-            
         }
         bool shielding;
         void StartedShielding() { shielding = true; }
@@ -59,6 +58,10 @@ namespace Pratfall.Characters
         {
             shield.TurnOff();
             currentlyPerformingMove?.moveToPerform.Stop();
+        }
+        void OnShieldBreak()
+        {
+            shield.TurnOff();
         }
 
         Vector2 finalVelocity;
@@ -90,13 +93,13 @@ namespace Pratfall.Characters
             if (moveLockout)
             {
                 finalVelocity = Vector3.zero;
-                if (!detectGround.groundIsBelow)
+                if (!detectGround.grounded)
                     finalVelocity = Vector2.right * airSpeed * direction.x;
                 else
                     finalVelocity = Vector3.zero;
                 return;
             }
-            if (detectGround.groundIsBelow)
+            if (detectGround.grounded)
                 finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
             else
                 finalVelocity = Vector2.right * airSpeed * direction.x;
@@ -116,14 +119,19 @@ namespace Pratfall.Characters
 
         public override void OnJumpReleased() { }
 
+        Coroutine shieldWhenReady;
         public override void OnBlock()
         {
-            if(detectGround.groundIsBelow)
-                shield.TurnOn();
+            shieldWhenReady = StartCoroutine(CR_ShieldWhenReady());
         }
-
+        IEnumerator CR_ShieldWhenReady()
+        {
+            yield return new WaitUntil(()=>(!moveLockout && hitControl.hitStun <= 0f && detectGround.grounded));
+            shield.TurnOn();
+        }
         public override void OnBlockReleased()
         {
+            StopCoroutine(shieldWhenReady);
             shield.TurnOff();
         }
 
@@ -217,6 +225,16 @@ namespace Pratfall.Characters
                 follower.position = followee.position;
                 yield return null;
             }
+        }
+
+        public override void OnStart()
+        {
+
+        }
+
+        public override void OnStartReleased()
+        {
+
         }
     }
 }

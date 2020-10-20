@@ -2,7 +2,7 @@
     "name": "FighterInputActions",
     "maps": [
         {
-            "name": "Fighter",
+            "name": "General",
             "id": "01cb499f-0fb1-4367-9d6e-0c6a5c574261",
             "actions": [
                 {
@@ -49,6 +49,14 @@
                     "name": "Special",
                     "type": "Button",
                     "id": "db04b3c8-cc13-4abf-807d-7015765d9c36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "82b3342c-0435-4720-a5ae-65c5e75d8323",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -272,6 +280,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13e3b4e3-ec06-4881-86e5-6ee3d813e988",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce011d82-a2bc-4210-9e84-9cb8ef0a3fe5",
+                    "path": "<HID::mayflash limited MAYFLASH GameCube Controller Adapter>/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

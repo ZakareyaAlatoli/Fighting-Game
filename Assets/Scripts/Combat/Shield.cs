@@ -13,9 +13,10 @@ namespace Pratfall
         public Hurtbox shieldBubble;
         Renderer shieldVisual;
         List<Hurtbox> shieldedObjects;
+        public float minimumSize = 0.1f;
         float defaultSize;
 
-        public System.Action ShieldOn, ShieldOff;
+        public System.Action ShieldOn, ShieldOff, ShieldBreak;
 
         public float shrinkSpeed;
         public float regrowSpeed;
@@ -29,11 +30,13 @@ namespace Pratfall
             hurtboxShielder.TriggerStart += OnTriggered;
             hurtboxShielder.TriggerEnd += OnStoppedTrigger;
             //BUG: For some reason the hurtboxes don't become shielded
-            //the first you shield, this is a temporary fix
-            TurnOff();
-            TurnOn();
+            //the first time you shield, this is a temporary fix
+        }
+        void Start()
+        {
             TurnOff();
         }
+
         void OnEnable() { }
         void OnDisable() { }
         void OnDestroy()
@@ -52,7 +55,7 @@ namespace Pratfall
             shieldVisual.enabled = true;
             if(sizeChange != null)
                 StopCoroutine(sizeChange);
-            sizeChange = ChangeSize(transform, 0.1f, shrinkSpeed * Time.deltaTime);
+            sizeChange = ChangeSize(transform, minimumSize, shrinkSpeed * Time.deltaTime);
         }
         public void TurnOff()
         {
@@ -73,12 +76,15 @@ namespace Pratfall
         }
         void SetSize(float normalizedSize)
         {
-            normalizedSize = Mathf.Max(normalizedSize, 0.1f);
+            normalizedSize = Mathf.Max(normalizedSize, minimumSize);
             transform.localScale = Vector3.one * (normalizedSize * defaultSize);
         }
         public void TakeDamage(float damage)
         {
-            SetSize((transform.localScale.x / defaultSize) - (damage / defaultSize));
+            float sizeValue = (transform.localScale.x / defaultSize) - (damage / defaultSize);
+            SetSize(sizeValue);
+            if (sizeValue <= minimumSize)
+                ShieldBreak?.Invoke();
         }
         void OnTriggered(ITriggerable triggerable)
         {
@@ -118,12 +124,16 @@ namespace Pratfall
             //Shrink
             if(target.localScale.x > desiredScale)
             {
+                //While bigger than the minimum scale
                 while(target.localScale.x > desiredScale)
                 {
+                    //Keep shrinking
                     target.localScale -= scaleRate;
+                    //If we reach the smallest scale, the shield will "break"
                     if (target.localScale.x < desiredScale)
                     {
                         target.localScale = vectorScale;
+                        ShieldBreak?.Invoke();
                         yield break;
                     }
                     yield return null;

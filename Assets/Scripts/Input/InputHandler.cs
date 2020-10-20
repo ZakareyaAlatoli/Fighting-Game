@@ -21,6 +21,8 @@ namespace Pratfall.Input
         void OnAttackReleased();
         void OnSpecial();
         void OnSpecialReleased();
+        void OnStart();
+        void OnStartReleased();
     }
     /// <summary>
     /// Passes input from an input device to a controllable object
@@ -40,6 +42,8 @@ namespace Pratfall.Input
         private InputAction attackAction;
         public static readonly string SPECIAL = "Special";
         private InputAction specialAction;
+        public static readonly string START = "Start";
+        private InputAction startAction;
 
         PlayerInput input;
         public int port { get => input.playerIndex; }
@@ -61,6 +65,7 @@ namespace Pratfall.Input
             blockAction = input.actions.FindAction(BLOCK);
             attackAction = input.actions.FindAction(ATTACK);
             specialAction = input.actions.FindAction(SPECIAL);
+            startAction = input.actions.FindAction(START);
         }
 
         void OnEnable()
@@ -76,6 +81,9 @@ namespace Pratfall.Input
 
             specialAction.performed += OnSpecial;
             specialAction.canceled += OnSpecialReleased;
+
+            startAction.performed += OnStart;
+            startAction.canceled += OnStartReleased;
         }
 
         void OnDisable()
@@ -91,6 +99,9 @@ namespace Pratfall.Input
 
             specialAction.performed -= OnSpecial;
             specialAction.canceled -= OnSpecialReleased;
+
+            startAction.performed -= OnStart;
+            startAction.canceled -= OnStartReleased;
         }
 
 
@@ -151,6 +162,21 @@ namespace Pratfall.Input
             foreach (IControllable controllable in controllables)
             {
                 controllable.OnSpecialReleased();
+            }
+        }
+
+        void OnStart(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnStart();
+            }
+        }
+        void OnStartReleased(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnStartReleased();
             }
         }
 

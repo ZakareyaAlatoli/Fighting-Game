@@ -114,5 +114,15 @@ namespace Pratfall.Input
         {
 
         }
+
+        public void OnStart()
+        {
+
+        }
+
+        public void OnStartReleased()
+        {
+
+        }
     }
 }

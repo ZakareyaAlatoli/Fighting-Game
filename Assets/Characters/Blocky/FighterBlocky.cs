@@ -26,5 +26,8 @@ namespace Pratfall.Characters
 
         public override void OnSpecial() { }
         public override void OnSpecialReleased() { }
+
+        public override void OnStart() { }
+        public override void OnStartReleased() { }
     }
 }

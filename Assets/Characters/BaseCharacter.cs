@@ -58,6 +58,9 @@ namespace Pratfall.Characters
         public abstract void OnSpecial();
         public abstract void OnSpecialReleased();
 
+        public abstract void OnStart();
+        public abstract void OnStartReleased();
+
 
 
 

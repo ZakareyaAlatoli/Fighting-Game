@@ -75,10 +75,14 @@ namespace Pratfall
 
         protected Coroutine FollowObject(Transform follower, Transform followee, Vector3 offset)
         {
+            if (followee == null)
+                followee = user.worldCollider.transform;
             return StartCoroutine(CR_FollowObject(follower, followee, offset));
         }
         protected Coroutine FollowObject(Transform follower, Transform followee)
         {
+            if (followee == null)
+                followee = user.worldCollider.transform;
             return StartCoroutine(CR_FollowObject(follower, followee, Vector3.zero));
         }
 

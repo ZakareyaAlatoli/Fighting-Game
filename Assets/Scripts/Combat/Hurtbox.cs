@@ -20,7 +20,7 @@ namespace Pratfall
         public HitFlags resistances;
         public event System.Action<HitResult> Hurt;
 
-        void Start()
+        void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("Hurtbox");
             _attachedCollider = GetComponent<TriggerableCollider>().attachedCollider;

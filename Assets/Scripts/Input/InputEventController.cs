@@ -9,23 +9,39 @@ namespace Pratfall.Input
     {
         private InputHandler previous;
         public InputHandler controller;
-        public UnityEvent Jump, Block, Attack, Special;
+        [Header("Jump")]
+        public UnityEvent Jump, JumpReleased; 
+
+        [Header("Block")]
+        public UnityEvent Block, BlockReleased;
+
+        [Header("Attack")]
+        public UnityEvent Attack, AttackReleased;
+
+        [Header("Special")]
+        public UnityEvent Special, SpecialReleased;
+
+        [Header("Start")]
+        public UnityEvent Start, StartReleased;
 
         public void OnAltMove(Vector2 direction) { }
 
         public void OnMove(Vector2 direction) { }
 
-        public void OnAttack() { Jump?.Invoke(); }
-        public void OnAttackReleased() { }
+        public void OnJump() { Jump?.Invoke(); }
+        public void OnJumpReleased() { JumpReleased?.Invoke(); }
+
+        public void OnAttack() { Attack?.Invoke(); }
+        public void OnAttackReleased() { AttackReleased?.Invoke(); }
 
         public void OnBlock() { Block?.Invoke(); }
-        public void OnBlockReleased() { }
-
-        public void OnJump() { Jump?.Invoke(); }
-        public void OnJumpReleased() { }
+        public void OnBlockReleased() { BlockReleased?.Invoke(); }
 
         public void OnSpecial() { Special?.Invoke(); }
-        public void OnSpecialReleased() { }
+        public void OnSpecialReleased() { SpecialReleased?.Invoke(); }
+
+        public void OnStart() { Start?.Invoke(); }
+        public void OnStartReleased() { StartReleased?.Invoke(); }
 
 
         void OnValidate()

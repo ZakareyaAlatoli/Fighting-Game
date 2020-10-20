@@ -22,7 +22,7 @@ namespace Pratfall
         public string GetDisplayableValue() { return health.ToString(); }
 
         public Hurtbox[] playerHurtboxes;
-        private Hurtbox shieldHurtbox;
+        public Hurtbox shieldHurtbox;
         [SerializeField]
         private HitTags _hitTags;
         public HitTags hitTags
@@ -40,8 +40,7 @@ namespace Pratfall
         Dictionary<GameObject, List<Hitbox>> hitPlayerThisFrame;
         Dictionary<GameObject, List<Hitbox>> hitShieldThisFrame;
         void Awake()
-        {
-            shieldHurtbox = shield.shieldBubble;
+        {        
             hitPlayerThisFrame = new Dictionary<GameObject, List<Hitbox>>();
             hitShieldThisFrame = new Dictionary<GameObject, List<Hitbox>>();
         }
@@ -57,6 +56,12 @@ namespace Pratfall
             shieldHurtbox.hitTags.origin = _hitTags.origin;
         }
 
+        void ShieldBreakStun()
+        {
+            //TODO: Get rid of magic numbers
+            body.AddForce(Vector3.up * 400f);
+            hitStun += 5f;
+        }
         void OnEnable()
         {
             foreach (Hurtbox h in playerHurtboxes)
@@ -64,6 +69,7 @@ namespace Pratfall
                 h.Hurt += OnHurtPlayer;
             }
             shieldHurtbox.Hurt += OnHurtShield;
+            shield.ShieldBreak += ShieldBreakStun;
         }
         void OnDisable()
         {
@@ -71,7 +77,8 @@ namespace Pratfall
             {
                 h.Hurt -= OnHurtPlayer;
             }
-            shieldHurtbox.Hurt += OnHurtShield;
+            shieldHurtbox.Hurt -= OnHurtShield;
+            shield.ShieldBreak -= ShieldBreakStun;
         }
 
         void OnHurtPlayer(HitResult result)
@@ -131,10 +138,11 @@ namespace Pratfall
                     DisableRehit(h, hurtbox);
                 }
                 DisableRehit(h, shieldHurtbox);
-
+                //THIS IS WHERE THE MAGIC HAPPENS
                 body.AddForce(hitReaction.knockback);
                 hitStun += hitReaction.hitStun;
                 health -= hitReaction.damage;
+                //------------------------------
             }
         }
         void ProcessShieldHits(params Hitbox[] hitboxes)
@@ -147,19 +155,34 @@ namespace Pratfall
                 {
                     DisableRehit(h, hurtbox);
                 }
-
+                //MORE MAGIC HERE
                 shield.TakeDamage(hitReaction.shieldDamage);
+                //---------------
             }
         }
 
+        bool inHitstun = false;
         void Update()
         {
             float previousHitstun = hitStun;
-            hitStun = Mathf.Max(hitStun - Time.deltaTime, 0f);
-            if (hitStun > previousHitstun && previousHitstun <= 0)
-                EnteredHitstun?.Invoke();
-            if (hitStun <= 0 && previousHitstun > 0)
-                LeftHitstun?.Invoke();
+            hitStun -= Time.deltaTime;
+            if(hitStun < 0f)
+            {
+                hitStun = 0f;
+                if (previousHitstun > 0f)
+                {
+                    inHitstun = false;
+                    LeftHitstun?.Invoke();
+                }
+            }
+            else if(hitStun > 0f)
+            {
+                if (!inHitstun)
+                {
+                    inHitstun = true;
+                    EnteredHitstun?.Invoke();
+                }
+            }
         }
         void LateUpdate()
         {

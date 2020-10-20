@@ -248,7 +248,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &457859962220822458
 MonoBehaviour:
@@ -595,6 +595,7 @@ MonoBehaviour:
   - {fileID: 867032572826827221}
   - {fileID: 6681543672783489197}
   - {fileID: 2399926865897718441}
+  shieldHurtbox: {fileID: 4634318758189194754}
   _hitTags:
     team: 0
     origin: {fileID: 457859961941925037}
@@ -1175,13 +1176,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4523489931825235740}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e44ec69b38dd643408e4a93d4daa854d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hurtboxShielder: {fileID: 5743509436154017773}
   shieldBubble: {fileID: 4634318758189194754}
+  minimumSize: 0.1
   shrinkSpeed: 0.25
   regrowSpeed: 0.25
 --- !u!1 &5176307524958367092
@@ -1560,3 +1562,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 8628258417023846874}
+  hitboxDelay: 0.1
+  hitboxInitiallyOn: 1
+  damage: 2
+  knockback: {x: 500, y: 700}
+  damageSelf: 0
+  priority: 0
+  rehitTime: -1
+  hitboxAttachmentPoint: {fileID: 0}
+  hitboxOffset: {x: 0.5, y: -0.3, z: 0}
+  hitboxDuration: 0.1
+  endLag: 0.3
