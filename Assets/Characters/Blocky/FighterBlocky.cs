@@ -16,11 +16,15 @@ namespace Pratfall.Characters
         public override void OnAltMove(Vector2 direction) { }
 
         public override void OnJump() { }
+        public override void OnJumpReleased() { }
 
         public override void OnBlock() { }
+        public override void OnBlockReleased() { }
 
         public override void OnAttack() { }
+        public override void OnAttackReleased() { }
 
         public override void OnSpecial() { }
+        public override void OnSpecialReleased() { }
     }
 }

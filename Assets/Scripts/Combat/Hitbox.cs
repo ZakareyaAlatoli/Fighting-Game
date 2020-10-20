@@ -45,6 +45,7 @@ namespace Pratfall
     public struct HitBehavior
     {
         public float damage;
+        public float shieldDamage;
         public Vector2 knockback;
         public float hitStun;
     }
@@ -80,8 +81,8 @@ namespace Pratfall
     {
         public HitData hitData;
         private Trigger trigger;
-        public event System.Action<HurtboxModel> Hit;
-        public void HitCallback(HurtboxModel victim)
+        public event System.Action<HitController> Hit;
+        public void HitCallback(HitController victim)
         {
             Hit?.Invoke(victim);
         }

@@ -18,6 +18,10 @@ namespace Pratfall
         public void OnTriggerStayed(Trigger other) { TriggerStayed?.Invoke(other); }
         public void OnTriggerExited(Trigger other) { TriggerExited?.Invoke(other); }
 
-        void Awake() { _attachedCollider = GetComponent<Collider>(); }
+        void Awake()
+        {
+            _attachedCollider = GetComponent<Collider>();
+            _attachedCollider.isTrigger = false;
+        }
     }
 }

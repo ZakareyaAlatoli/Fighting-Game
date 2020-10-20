@@ -52,6 +52,8 @@ namespace Pratfall.Input
 
         public void OnJump() { }
 
+        public void OnJumpReleased() { }
+
         public void OnBlock() { }
 
         public void OnAttack() { Select(); } 
@@ -96,6 +98,21 @@ namespace Pratfall.Input
                         sbp.OnSelectedByPlayer(associatedPlayer);
                 }
             }
+        }
+
+        public void OnBlockReleased()
+        {
+
+        }
+
+        public void OnAttackReleased()
+        {
+
+        }
+
+        public void OnSpecialReleased()
+        {
+
         }
     }
 }

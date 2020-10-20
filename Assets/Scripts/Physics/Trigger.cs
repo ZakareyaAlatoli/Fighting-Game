@@ -15,13 +15,23 @@ namespace Pratfall
     [RequireComponent(typeof(Collider))]
     public class Trigger : MonoBehaviour
     {
+        Collider _attachedCollider;
         public event System.Action<ITriggerable> TriggerStart;
         public event System.Action<ITriggerable> TriggerContinue;
         public event System.Action<ITriggerable> TriggerEnd;
         // Start is called before the first frame update
         void Awake()
         {
-            GetComponent<Collider>().isTrigger = true;
+            _attachedCollider = GetComponent<Collider>();
+            _attachedCollider.isTrigger = true;
+        }
+        void OnEnable()
+        {
+            _attachedCollider.enabled = true;
+        }
+        void OnDisable()
+        {
+            _attachedCollider.enabled = false;
         }
 
         protected void OnTriggerEnter(Collider other)

@@ -16,7 +16,7 @@ namespace Pratfall.Characters
             get => _team;
             set
             {
-                hurtboxModel.hitTags.team = value;
+                hitControl.hitTags.team = value;
                 _team = value;
             }
         }
@@ -24,11 +24,12 @@ namespace Pratfall.Characters
         public string charName;
         public Rigidbody worldCollider;
         public PhysicsModifier physics;
-        public HurtboxModel hurtboxModel;
         public HitController hitControl;
 
         void Awake()
         {
+            hitControl.hitTags.origin = gameObject;
+            hitControl.hitTags.team = team;
             facingRight = true;
         }
 
@@ -46,12 +47,21 @@ namespace Pratfall.Characters
         public abstract void OnAltMove(Vector2 direction);
 
         public abstract void OnJump();
+        public abstract void OnJumpReleased();
 
         public abstract void OnAttack();
+        public abstract void OnAttackReleased();
 
         public abstract void OnBlock();
+        public abstract void OnBlockReleased();
 
         public abstract void OnSpecial();
+        public abstract void OnSpecialReleased();
+
+
+
+
+
 
 
         //FUNCTIONS COMMON TO ALL CHARACTERS

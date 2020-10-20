@@ -16,12 +16,17 @@ namespace Pratfall.Input
         public void OnMove(Vector2 direction) { }
 
         public void OnAttack() { Jump?.Invoke(); }
+        public void OnAttackReleased() { }
 
         public void OnBlock() { Block?.Invoke(); }
+        public void OnBlockReleased() { }
 
         public void OnJump() { Jump?.Invoke(); }
+        public void OnJumpReleased() { }
 
         public void OnSpecial() { Special?.Invoke(); }
+        public void OnSpecialReleased() { }
+
 
         void OnValidate()
         {

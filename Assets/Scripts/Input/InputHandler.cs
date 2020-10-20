@@ -14,9 +14,13 @@ namespace Pratfall.Input
         void OnMove(Vector2 direction);
         void OnAltMove(Vector2 direction);
         void OnJump();
+        void OnJumpReleased();
         void OnBlock();
+        void OnBlockReleased();
         void OnAttack();
+        void OnAttackReleased();
         void OnSpecial();
+        void OnSpecialReleased();
     }
     /// <summary>
     /// Passes input from an input device to a controllable object
@@ -62,17 +66,31 @@ namespace Pratfall.Input
         void OnEnable()
         {
             jumpAction.performed += OnJump;
+            jumpAction.canceled += OnJumpReleased;
+
             blockAction.performed += OnBlock;
+            blockAction.canceled += OnBlockReleased;
+
             attackAction.performed += OnAttack;
+            attackAction.canceled += OnAttackReleased;
+
             specialAction.performed += OnSpecial;
+            specialAction.canceled += OnSpecialReleased;
         }
 
         void OnDisable()
         {
             jumpAction.performed -= OnJump;
+            jumpAction.canceled -= OnJumpReleased;
+
             blockAction.performed -= OnBlock;
+            blockAction.canceled -= OnBlockReleased;
+
             attackAction.performed -= OnAttack;
+            attackAction.canceled -= OnAttackReleased;
+
             specialAction.performed -= OnSpecial;
+            specialAction.canceled -= OnSpecialReleased;
         }
 
 
@@ -83,12 +101,26 @@ namespace Pratfall.Input
                 controllable.OnJump();
             }
         }
+        void OnJumpReleased(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnJumpReleased();
+            }
+        }
 
         void OnBlock(InputAction.CallbackContext ctx)
         {
             foreach (IControllable controllable in controllables)
             {
                 controllable.OnBlock();
+            }
+        }
+        void OnBlockReleased(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnBlockReleased();
             }
         }
 
@@ -99,12 +131,26 @@ namespace Pratfall.Input
                 controllable.OnAttack();
             }
         }
+        void OnAttackReleased(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnAttackReleased();
+            }
+        }
 
         void OnSpecial(InputAction.CallbackContext ctx)
         {
             foreach (IControllable controllable in controllables)
             {
                 controllable.OnSpecial();
+            }
+        }
+        void OnSpecialReleased(InputAction.CallbackContext ctx)
+        {
+            foreach (IControllable controllable in controllables)
+            {
+                controllable.OnSpecialReleased();
             }
         }
 

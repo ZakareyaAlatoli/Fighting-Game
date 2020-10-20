@@ -14,6 +14,9 @@ namespace Pratfall.Characters
         public float runSpeed;
         public float airSpeed;
 
+        [Space(10f)]
+        public Shield shield;
+
         [Header("Input")]
         //MOVES
         public Moveset groundedMoveset;
@@ -29,6 +32,10 @@ namespace Pratfall.Characters
             //TODO make this not a magic number
             inputBuffer = new InputBuffer(60);
             _timeBeforeBufferUpdate = delayBetweenInputBuffer;
+            //Attach shield to character
+            shield.shieldBubble.hitTags.origin = gameObject;
+            shield.shieldBubble.hitTags.team = team;
+            FollowObject(shield.transform, worldCollider.transform);
         }
 
         Vector2 finalVelocity;
@@ -45,7 +52,7 @@ namespace Pratfall.Characters
             }
 
             //Can only move manually when not in hitstun
-            if (hitControl.hitStunTimer <= 0f)
+            if (hitControl.hitStun <= 0f)
             {
                 if (detectGround.groundIsBelow && !moveLockout)
                     finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
@@ -70,7 +77,17 @@ namespace Pratfall.Characters
                 worldCollider.AddForce(Vector2.up * jumpForce);
         }
 
-        public override void OnBlock() { }
+        public override void OnJumpReleased() { }
+
+        public override void OnBlock()
+        {
+            shield.TurnOn();
+        }
+
+        public override void OnBlockReleased()
+        {
+            shield.TurnOff();
+        }
 
 
 
@@ -103,6 +120,8 @@ namespace Pratfall.Characters
                 }
             }
         }
+        public override void OnAttackReleased() { }
+
         void OnMoveBegin(DynamicAction move)
         {
             move.FullyCompleted += OnEndMove;
@@ -115,10 +134,9 @@ namespace Pratfall.Characters
             moveLockout = false;
         }
 
-        public override void OnSpecial()
-        {
+        public override void OnSpecial() { }
+        public override void OnSpecialReleased() { }
 
-        }
         //END INPUT ACTIONS
         new void Update()
         {
@@ -134,6 +152,22 @@ namespace Pratfall.Characters
         new void FixedUpdate()
         {
             worldCollider.AddForce(finalVelocity);
+        }
+
+
+
+        Coroutine FollowObject(Transform follower, Transform followee)
+        {
+            return StartCoroutine(CR_FollowObject(follower, followee));
+        }
+
+        IEnumerator CR_FollowObject(Transform follower, Transform followee)
+        {
+            while (follower != null && followee != null)
+            {
+                follower.position = followee.position;
+                yield return null;
+            }
         }
     }
 }

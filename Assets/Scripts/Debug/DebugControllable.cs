@@ -13,10 +13,27 @@ namespace Pratfall.Debugging
 
         public void OnJump() { Debug.Log($"JUMPED"); }
 
+        public void OnJumpReleased() { Debug.Log($"JUMP RELEASED"); }
+
         public void OnBlock() { Debug.Log($"BLOCKED"); }
 
         public void OnAttack() { Debug.Log($"ATTACKED"); }
 
         public void OnSpecial() { Debug.Log($"SPECIALED"); }
+
+        public void OnBlockReleased()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnAttackReleased()
+        {
+            
+        }
+
+        public void OnSpecialReleased()
+        {
+         
+        }
     }
 }

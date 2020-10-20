@@ -36,6 +36,8 @@ namespace Pratfall
 
         public void OnHurt(Hitbox hitter)
         {
+            if (!enabled)
+                return;
             HitData hitData = hitter.hitData;
             HitFlags pierces = hitter.hitData.ignore;
             HitFlags blocked = ((pierces | resistances) ^ pierces);
@@ -51,7 +53,6 @@ namespace Pratfall
                 //and self-damages...
                 if (hitData.damageSelf)
                 {
-                    
                     if (attackPass(hitData.ignore, resistances))
                         result.success = true;
                     else
