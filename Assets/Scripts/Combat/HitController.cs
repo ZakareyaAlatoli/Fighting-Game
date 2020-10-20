@@ -128,6 +128,7 @@ namespace Pratfall
                 {
                     DisableRehit(h, hurtbox);
                 }
+                DisableRehit(h, shieldHurtbox);
 
                 body.AddForce(hitReaction.knockback);
                 hitStun += hitReaction.hitStun;
@@ -140,6 +141,10 @@ namespace Pratfall
             {
                 HitBehavior hitReaction = h.hitData.hitBehavior;
                 DisableRehit(h, shieldHurtbox);
+                foreach (Hurtbox hurtbox in playerHurtboxes)
+                {
+                    DisableRehit(h, hurtbox);
+                }
 
                 shield.TakeDamage(hitReaction.shieldDamage);
             }

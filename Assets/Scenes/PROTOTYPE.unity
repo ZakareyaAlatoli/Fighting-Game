@@ -2356,7 +2356,7 @@ GameObject:
   - component: {fileID: 847880955}
   - component: {fileID: 847880954}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2380,7 +2380,7 @@ MonoBehaviour:
       origin: {fileID: 847880953}
     hitBehavior:
       damage: 0
-      shieldDamage: 0.2
+      shieldDamage: 0.1
       knockback: {x: 200, y: 200}
       hitStun: 0.2
     priority: 0
