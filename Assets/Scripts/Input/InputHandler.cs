@@ -157,7 +157,12 @@ namespace Pratfall.Input
         void Update()
         {
             foreach (IControllable controllable in controllables)
-            {         
+            {
+                if(controllable == null)
+                {
+                    RemovePlayerFromControllable(this, controllable);
+                    continue;
+                }
                 controllable.OnMove(moveAction.ReadValue<Vector2>());
                 controllable.OnAltMove(altMoveAction.ReadValue<Vector2>());
             }

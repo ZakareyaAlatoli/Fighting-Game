@@ -14,6 +14,8 @@ namespace Pratfall
         public float weight;
         public float hitStun;
 
+        public event System.Action EnteredHitstun, LeftHitstun;
+
         public Rigidbody body;
         public Shield shield;
 
@@ -152,7 +154,12 @@ namespace Pratfall
 
         void Update()
         {
+            float previousHitstun = hitStun;
             hitStun = Mathf.Max(hitStun - Time.deltaTime, 0f);
+            if (hitStun > previousHitstun && previousHitstun <= 0)
+                EnteredHitstun?.Invoke();
+            if (hitStun <= 0 && previousHitstun > 0)
+                LeftHitstun?.Invoke();
         }
         void LateUpdate()
         {

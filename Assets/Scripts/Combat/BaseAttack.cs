@@ -35,6 +35,9 @@ namespace Pratfall
 
             hitInfo.hitData.hitBehavior.damage = damage;
             hitInfo.hitData.hitBehavior.knockback = knockback;
+            //Maybe this should be determined by individual moves?
+            if (!user.facingRight)
+                hitInfo.hitData.hitBehavior.knockback = new Vector2(-knockback.x, knockback.y);
             hitInfo.hitData.damageSelf = damageSelf;
             hitInfo.hitData.priority = priority;
             hitInfo.hitData.rehitTime = rehitTime;
@@ -70,16 +73,28 @@ namespace Pratfall
             mat.color = enabledColor;
         }
 
+        protected Coroutine FollowObject(Transform follower, Transform followee, Vector3 offset)
+        {
+            return StartCoroutine(CR_FollowObject(follower, followee, offset));
+        }
         protected Coroutine FollowObject(Transform follower, Transform followee)
         {
-            return StartCoroutine(CR_FollowObject(follower, followee));
+            return StartCoroutine(CR_FollowObject(follower, followee, Vector3.zero));
         }
 
-        protected IEnumerator CR_FollowObject(Transform follower, Transform followee)
+        protected IEnumerator CR_FollowObject(Transform follower, Transform followee, Vector3 offset)
         {
             while (follower != null && followee != null)
             {
                 follower.position = followee.position;
+                if (user.facingRight)
+                {
+                    follower.position += offset;
+                }
+                else
+                {
+                    follower.position += new Vector3(-offset.x, offset.y, -offset.z);
+                }
                 yield return null;
             }
         }

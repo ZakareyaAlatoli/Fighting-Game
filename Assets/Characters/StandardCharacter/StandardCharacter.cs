@@ -27,7 +27,7 @@ namespace Pratfall.Characters
         InputBuffer inputBuffer;
         InputState inputState;
 
-        void Awake()
+        protected override void Start()
         {
             //TODO make this not a magic number
             inputBuffer = new InputBuffer(60);
@@ -36,33 +36,70 @@ namespace Pratfall.Characters
             shield.shieldBubble.hitTags.origin = gameObject;
             shield.shieldBubble.hitTags.team = team;
             FollowObject(shield.transform, worldCollider.transform);
+            //Handle behavior when put into hitstun
+            
+        }
+        bool shielding;
+        void StartedShielding() { shielding = true; }
+        void StoppedShielding() { shielding = false; }
+        void OnEnable()
+        {
+            hitControl.EnteredHitstun += OnHitstunned;
+            shield.ShieldOn += StartedShielding;
+            shield.ShieldOff += StoppedShielding;
+        }
+        void OnDisable()
+        {
+            hitControl.EnteredHitstun -= OnHitstunned;
+            shield.ShieldOn -= StartedShielding;
+            shield.ShieldOff -= StoppedShielding;
+        }
+
+        void OnHitstunned()
+        {
+            shield.TurnOff();
+            currentlyPerformingMove?.moveToPerform.Stop();
         }
 
         Vector2 finalVelocity;
         //INPUT ACTIONS
         public override void OnMove(Vector2 direction)
         {
+            if (Mathf.Abs(direction.x) < InputBuffer.stickDeadzone)
+                direction.x = 0f;
             inputState.moveValue = direction;
-            if (detectGround.grounded && !moveLockout)
+            if (detectGround.grounded && !moveLockout && !shielding && hitControl.hitStun <= 0f)
             {
-                if (direction.x > 0f && !facingRight)
+                if (direction.x > 0 && !facingRight)
                     Turn();
-                else if (direction.x < 0f && facingRight)
+                else if (direction.x < 0 && facingRight)
                     Turn();
             }
 
             //Can only move manually when not in hitstun
-            if (hitControl.hitStun <= 0f)
-            {
-                if (detectGround.groundIsBelow && !moveLockout)
-                    finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
-                else
-                    finalVelocity = Vector2.right * airSpeed * direction.x;
-            }
-            else
+            if (hitControl.hitStun > 0f)
             {
                 finalVelocity = Vector3.zero;
+                return;
             }
+            if (shielding)
+            {
+                finalVelocity = Vector3.zero;
+                return;
+            }
+            if (moveLockout)
+            {
+                finalVelocity = Vector3.zero;
+                if (!detectGround.groundIsBelow)
+                    finalVelocity = Vector2.right * airSpeed * direction.x;
+                else
+                    finalVelocity = Vector3.zero;
+                return;
+            }
+            if (detectGround.groundIsBelow)
+                finalVelocity = new Vector2(detectGround.groundSlope.x, detectGround.groundSlope.y).normalized * runSpeed * direction.x;
+            else
+                finalVelocity = Vector2.right * airSpeed * direction.x;
         }
         //Movement related functions
 
@@ -73,7 +110,7 @@ namespace Pratfall.Characters
 
         public override void OnJump()
         {
-            if(!moveLockout && detectGround.grounded)
+            if(!moveLockout && !shielding && detectGround.grounded)
                 worldCollider.AddForce(Vector2.up * jumpForce);
         }
 
@@ -81,7 +118,8 @@ namespace Pratfall.Characters
 
         public override void OnBlock()
         {
-            shield.TurnOn();
+            if(detectGround.groundIsBelow)
+                shield.TurnOn();
         }
 
         public override void OnBlockReleased()
@@ -97,8 +135,12 @@ namespace Pratfall.Characters
         //buffer to the Movelist. If the input buffer has a string of directional
         //inputs corresponding to a move, that move will be performed
         bool moveLockout;
+        AttackMove currentlyPerformingMove;
         public override void OnAttack()
         {
+            if (shielding || hitControl.hitStun > 0)
+                return;
+
             InputDirection[] bufferContents = inputBuffer.MovePattern();
             if (!facingRight)
                 bufferContents = InputBuffer.InvertHorizontal(bufferContents);
@@ -109,7 +151,8 @@ namespace Pratfall.Characters
             else
                 attackMove = aerialMoveset.ParseInput(bufferContents);
 
-            if(attackMove != null)
+            currentlyPerformingMove = attackMove;
+            if (attackMove != null)
             {
                 if (!moveLockout)
                 {
@@ -125,6 +168,7 @@ namespace Pratfall.Characters
         void OnMoveBegin(DynamicAction move)
         {
             move.FullyCompleted += OnEndMove;
+            move.Interrupted += OnMoveInterrupted;
         }
         void OnEndMove(DynamicAction move)
         {
@@ -132,6 +176,11 @@ namespace Pratfall.Characters
             move.FullyCompleted -= OnEndMove;
             move.enabled = true;
             moveLockout = false;
+        }
+        void OnMoveInterrupted(DynamicAction move)
+        {
+            OnEndMove(move);
+            move.Interrupted -= OnMoveInterrupted;
         }
 
         public override void OnSpecial() { }

@@ -15,6 +15,8 @@ namespace Pratfall
         List<Hurtbox> shieldedObjects;
         float defaultSize;
 
+        public System.Action ShieldOn, ShieldOff;
+
         public float shrinkSpeed;
         public float regrowSpeed;
         void Awake()
@@ -23,20 +25,27 @@ namespace Pratfall
             shieldVisual = shieldBubble.GetComponent<Renderer>();
             shieldedObjects = new List<Hurtbox>();
             defaultSize = transform.localScale.x;
-        }
-        void OnEnable()
-        {
+
             hurtboxShielder.TriggerStart += OnTriggered;
             hurtboxShielder.TriggerEnd += OnStoppedTrigger;
+            //BUG: For some reason the hurtboxes don't become shielded
+            //the first you shield, this is a temporary fix
+            TurnOff();
+            TurnOn();
+            TurnOff();
         }
-        void OnDisable()
+        void OnEnable() { }
+        void OnDisable() { }
+        void OnDestroy()
         {
             hurtboxShielder.TriggerStart -= OnTriggered;
-            hurtboxShielder.TriggerEnd += OnStoppedTrigger;
+            hurtboxShielder.TriggerEnd -= OnStoppedTrigger;
         }
+
         Coroutine sizeChange;
         public void TurnOn()
-        {      
+        {
+            ShieldOn?.Invoke();
             enabled = true;
             hurtboxShielder.enabled = true;
             shieldBubble.enabled = true;
@@ -47,6 +56,7 @@ namespace Pratfall
         }
         public void TurnOff()
         {
+            ShieldOff?.Invoke();
             enabled = false;
             hurtboxShielder.enabled = false;
             shieldBubble.enabled = false;
