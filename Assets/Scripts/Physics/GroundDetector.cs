@@ -4,14 +4,17 @@ using UnityEngine;
 
 namespace Pratfall
 {
+    [RequireComponent(typeof(Collider))]
     public class GroundDetector : MonoBehaviour
     {
         public Rigidbody body;
+        private Collider coll;
+
         private bool m_groundedPreviousFrame;
         public LayerMask detectionMask;
-        public Vector3 sphereCastorigin;
-        public float radius;
-        public float sphereCastMaxDistance;
+        Vector3 sphereCastorigin;
+        float radius;
+        const float sphereCastMaxDistance = 0.05f;
 
         private bool _grounded;
         public bool grounded { get => _grounded; }
@@ -27,10 +30,14 @@ namespace Pratfall
         {
             if (body == null)
                 body = GetComponent<Rigidbody>();
+            coll = GetComponent<Collider>();
         }
 
         void FixedUpdate()
         {
+            sphereCastorigin =  new Vector3(0f, -coll.bounds.extents.y + 0.5f, 0f);
+            radius = coll.bounds.extents.x - 0.01f;
+
             RaycastHit hitInfo;
             m_groundIsBelow = Physics.SphereCast(transform.position + sphereCastorigin, radius, Vector3.down, out hitInfo, sphereCastMaxDistance, detectionMask);
             if (m_groundIsBelow)

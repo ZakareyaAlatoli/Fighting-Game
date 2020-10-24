@@ -21,6 +21,65 @@ namespace Pratfall
         protected override abstract void OnFinished();
         protected abstract override void OnInterrupted();
 
+        public string animationName;
+        int animationTrigger;
+        AnimationState s;
+
+        protected override void Start()
+        {
+            //
+            //animationLayer = Animator.StringToHash(animationName);
+            for(int i=0; i<user.animator.parameterCount; i++)
+            {
+                if(user.animator.parameters[i].name == animationName)
+                {
+                    animationTrigger = user.animator.parameters[i].nameHash;
+                    return;
+                }
+            }
+            Debug.LogWarning($"Move({name}) needs parameter name {animationName} to work but " +
+                             $"{user.name}'s Animator Controller doesn't contain it");
+        }
+        protected override void OnStart()
+        {
+            base.OnStart();
+            PlayAnimation();
+        }
+
+        class MissingAnimationException : System.Exception { }
+        protected void PlayAnimation()
+        {
+            if (animationTrigger != 0)
+                user.animator.SetTrigger(animationTrigger);
+            else
+                throw new MissingAnimationException();
+        }
+
+        public Hitbox CreateHitbox(HitboxParameters param)
+        {
+            GameObject hitbox = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+            //DO STUFF WITH HITBOX
+            hitbox.GetComponent<Renderer>().material = GlobalResource.HitboxMaterial;
+            Hitbox hitInfo = hitbox.AddComponent<Hitbox>();
+            hitInfo.hitData.hitTags = new HitTags { origin = user.gameObject, team = user.team };
+
+            if (!param.startOn) DisableHitbox(hitInfo);
+
+            hitInfo.hitData.hitBehavior = param.hitBehavior;
+            //Maybe this should be determined by individual moves?
+            if (!user.facingRight)
+                hitInfo.hitData.hitBehavior.knockback = new Vector2(-param.hitBehavior.knockback.x, param.hitBehavior.knockback.y);
+            hitInfo.hitData.damageSelf = param.damageSelf;
+            hitInfo.hitData.priority = param.priority;
+            hitInfo.hitData.rehitTime = param.rehitTime;
+
+            hitbox.transform.localScale *= param.scale;
+            FollowObject(hitbox.transform, param.attachmentPoint, param.offset);
+            //-------------------
+            return hitInfo;
+        }
+
         //Helper functions
         protected Hitbox CreateHitbox(bool startEnabled, float damage, Vector2 knockback, bool damageSelf, int priority, float rehitTime)
         {
@@ -102,5 +161,22 @@ namespace Pratfall
                 yield return null;
             }
         }
+    }
+
+    [System.Serializable]
+    public struct HitboxParameters
+    {
+        public HitBehavior hitBehavior;
+        [Space(10f)]
+        public bool startOn;
+        public int priority;
+        public float rehitTime;
+        public bool damageSelf;
+        public bool damageTeammates;
+        public HitFlags ignore;
+        [Space(10f)]
+        public Transform attachmentPoint;
+        public Vector3 offset;
+        public float scale;
     }
 }

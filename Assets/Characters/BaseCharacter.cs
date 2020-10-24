@@ -25,6 +25,7 @@ namespace Pratfall.Characters
         public Rigidbody worldCollider;
         public PhysicsModifier physics;
         public HitController hitControl;
+        public Animator animator;
 
         void Awake()
         {

@@ -8,18 +8,19 @@ namespace Pratfall.Characters.StandardCharacterMoves
     public class atk_StandardChar_JAB : BaseAttack
     {
         [Header("Plug-in Dependencies")]
-        public Transform rightHand;
+        public float hitboxDelay = 0.1f;
+        public HitboxParameters param;
+        public float endLag = 0.5f;
         //Private Resources
         Hitbox hitbox;
 
         //MOVE BEHAVIOR
         protected override IEnumerator Behavior()
         {
-            yield return new WaitForSeconds(0.1f);
-            hitbox = CreateHitbox(true, 2f, new Vector2(400f, 200f), false, 0, -1f);
-            FollowObject(hitbox.transform, rightHand, new Vector3(0.2f, 0, 0));
+            yield return new WaitForSeconds(hitboxDelay);
+            hitbox = CreateHitbox(param);
             //END LAG
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(endLag);
         }
         //END MOVE BEHAVIOR
         protected override void OnInterrupted()

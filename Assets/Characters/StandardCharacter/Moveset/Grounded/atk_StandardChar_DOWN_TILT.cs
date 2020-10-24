@@ -8,22 +8,10 @@ namespace Pratfall.Characters.StandardCharacterMoves
     public class atk_StandardChar_DOWN_TILT : BaseAttack
     {
         [Header("Plug-in Dependencies")]
+        public HitboxParameters hitboxParam;
         public float hitboxDelay = 0.1f;
-
-        public bool hitboxInitiallyOn = true;
-        public float damage = 2f;
-        public Vector2 knockback;
-        public bool damageSelf = false;
-        public int priority = 0;
-        public float rehitTime = -1f;
-
-        public Transform hitboxAttachmentPoint;
-        public Vector3 hitboxOffset = new Vector3(0.5f, -0.3f, 0f);
-
         public float hitboxDuration = 0.1f;
         public float endLag = 0.3f;
-
-
 
         //Private Resources
         Hitbox hitbox;
@@ -32,9 +20,7 @@ namespace Pratfall.Characters.StandardCharacterMoves
         protected override IEnumerator Behavior()
         {
             yield return new WaitForSeconds(hitboxDelay);
-            hitbox = CreateHitbox(hitboxInitiallyOn, damage, knockback, damageSelf, priority, rehitTime);
-            hitbox.hitData.hitBehavior.shieldDamage = 0.7f;
-            FollowObject(hitbox.transform, hitboxAttachmentPoint, hitboxOffset);
+            hitbox = CreateHitbox(hitboxParam);
 
             yield return new WaitForSeconds(hitboxDuration);
             DisableHitbox(hitbox);

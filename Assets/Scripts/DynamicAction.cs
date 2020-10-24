@@ -9,10 +9,14 @@ namespace Pratfall
     /// should derive from this class
     /// </summary>
     public abstract class DynamicAction : MonoBehaviour {
-        protected void Start() {
+        void Awake() {
             midAction = false;
             interrupted = false;
-            Precache();
+        }
+
+        protected virtual void Start()
+        {
+            //
         }
 
         protected virtual void Update()
@@ -91,9 +95,5 @@ namespace Pratfall
         protected virtual void OnInterrupted() { }
         protected virtual void OnCompleted() { }
         protected virtual void OnFinished() { }
-        /// <summary>
-        /// Called after Start()
-        /// </summary>
-        protected virtual void Precache() { }
     }
 }

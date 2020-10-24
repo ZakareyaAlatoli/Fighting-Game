@@ -7,21 +7,25 @@ namespace Pratfall.Characters.StandardCharacterMoves
     [AddComponentMenu("Pratfall/Attacks/StandardCharacterAttack/StandardCharacter UP TILT")]
     public class atk_StandardChar_UP_TILT : BaseAttack
     {
+        [Header("Plug-in Dependencies")]
+        public float hitboxDelay;
+        public HitboxParameters param;
+        public float hitboxOffDelay;
+        public float endLag;
         //Private Resources
         Hitbox hitbox;
 
         //MOVE BEHAVIOR
         protected override IEnumerator Behavior()
         {
-            yield return new WaitForSeconds(0.1f);
-            hitbox = CreateHitbox(true, 2f, new Vector2(100f, 600f), false, 0, -1f);
-            FollowObject(hitbox.transform, user.worldCollider.transform, new Vector3(0.5f, 0.3f, 0f));
+            yield return new WaitForSeconds(hitboxDelay);
+            hitbox = CreateHitbox(param);
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(hitboxOffDelay);
             DisableHitbox(hitbox);
 
             //END LAG
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(endLag);
         }
         //END MOVE BEHAVIOR
         protected override void OnInterrupted()
